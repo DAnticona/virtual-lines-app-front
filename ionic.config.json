@@ -1,0 +1,7 @@
+{
+  "name": "virtual-lines-front",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
