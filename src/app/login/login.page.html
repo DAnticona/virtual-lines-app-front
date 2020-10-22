@@ -1,0 +1,43 @@
+<ion-grid>
+  <ion-row class="ion-justify-content-center">
+    <ion-col size-lg="6" size-md="6" size-xs="12" class="ion-align-self-start">
+      <form ngNativeValidate #f="ngForm" (ngSubmit)="login(f)">
+        <div class="ion-padding ion-text-center">
+          <h1>FreeLine</h1>
+        </div>
+        <div class="ion-text-center">
+          <ion-icon name="person-circle-outline" class="icon-64"></ion-icon>
+        </div>
+        <div class="ion-padding">
+          <ion-item [disabled]="loading">
+            <ion-input
+              type="email"
+              [(ngModel)]="user.email"
+              name="email"
+              placeholder="Username"
+              required
+            ></ion-input>
+          </ion-item>
+
+          <ion-item [disabled]="loading">
+            <ion-input
+              type="password"
+              [(ngModel)]="user.password"
+              name="password"
+              placeholder="Password"
+              required
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="ion-padding">
+          <ion-button [disabled]="loading" type="submit" expand="block">
+            <ion-icon *ngIf="!loading" name="log-in-outline"></ion-icon>
+            <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
+            Login
+          </ion-button>
+        </div>
+      </form>
+    </ion-col>
+  </ion-row>
+</ion-grid>

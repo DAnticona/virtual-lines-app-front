@@ -1,0 +1,14 @@
+[
+  {
+    "icon": "storefront-outline",
+    "name": "Establecimientos",
+    "redirectTo": "/stores",
+    "description": "Lista de Establecimientos"
+  },
+  {
+    "icon": "person-circle-outline",
+    "name": "Mi Cuenta",
+    "redirectTo": "/my-account",
+    "description": "Ajustes de mi cuenta"
+  }
+]

@@ -1,0 +1,27 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-menu-button color="primary" menu="firstMenu"> </ion-menu-button>
+    </ion-buttons>
+    <ion-title color="primary">Inicio</ion-title>
+    <ion-buttons slot="end">
+      <ion-avatar>
+        <img [src]="userService.user.image" alt="" />
+      </ion-avatar>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-img src="assets/image/image-home.jpg"></ion-img>
+    <ion-card-header>
+      <ion-card-subtitle>Hola</ion-card-subtitle>
+      <ion-card-title>{{userService.user.name}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      Bienvenido al sistema de colas virtuales, solo busca un establecimiento y sigue los pasos...
+    </ion-card-content>
+  </ion-card>
+</ion-content>
