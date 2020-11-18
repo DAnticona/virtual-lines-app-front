@@ -26,6 +26,35 @@
 @import '~@ionic/angular/css/flex-utils.css';
 
 // Personalizados
+.background-image {
+  // --background: url(../../assets/image/logo/background_login.jpg) 60% 60%/350% no-repeat;
+  // --ion-background-color: #683a3a;
+  // --background: rgba(0, 0, 0, 0.8);
+  // --background: url('../../assets/image/logo/background_login.jpg') no-repeat center center / cover;
+  --background: linear-gradient(rgba(80, 40, 40, 0.5), rgba(80, 40, 40, 0.5)),
+    url(assets/image/logo/background_login.jpg) no-repeat center center / cover;
+}
+
+.background-header {
+  --background: #5a162e;
+}
+
+.background-secondary {
+  --background: #b87c91;
+}
+
+.background-menu {
+  --background: #d8c9c9;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-gray {
+  color: #ffffffb2;
+}
+
 .icon-64 {
   font-size: 64px;
 }
@@ -44,4 +73,20 @@
 
 .img-100 {
   width: 100px;
+}
+
+.img-75 {
+  width: 75px;
+}
+
+.img-50 {
+  width: 50px;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.grid {
+  background-color: aqua;
 }

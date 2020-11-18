@@ -8,9 +8,10 @@ import { StoresPageRoutingModule } from './stores-routing.module';
 
 import { StoresPage } from './stores.page';
 import { SharedModule } from '../../shared/shared.module';
+import { PipesModule } from '../../services/pipes/pipes.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, StoresPageRoutingModule, SharedModule],
+  imports: [CommonModule, FormsModule, IonicModule, StoresPageRoutingModule, SharedModule, PipesModule],
   declarations: [StoresPage],
 })
 export class StoresPageModule {}

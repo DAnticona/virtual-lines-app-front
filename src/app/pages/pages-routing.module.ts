@@ -4,7 +4,7 @@ import { PagesComponent } from './pages.component';
 
 const pagesRoutes: Routes = [
   {
-    path: '',
+    path: 'pages',
     component: PagesComponent,
     children: [
       {

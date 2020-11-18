@@ -20,7 +20,7 @@ export class LoginPage implements OnInit {
     this.userService.login(this.user).subscribe(
       (res: any) => {
         this.loading = false;
-        this.router.navigate(['/home']);
+        this.router.navigate(['/pages/home']);
       },
       (err: any) => {
         this.loading = false;

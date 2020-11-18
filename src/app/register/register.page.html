@@ -1,0 +1,25 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="background-header">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-white">Regístrate como</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="vertical-center background-image ion-padding">
+  <ion-grid style="height: 100%">
+    <ion-row style="height: 100%" class="ion-justify-content-around ion-align-items-center">
+      <ion-col size="6">
+        <ion-button color="tertiary" routerLink="/register-client" expand="block" shape="round">
+          Usuario
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button color="tertiary" routerLink="/register-store" expand="block" shape="round">
+          Establecimiento
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

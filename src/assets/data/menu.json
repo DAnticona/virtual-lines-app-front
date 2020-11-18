@@ -2,13 +2,13 @@
   {
     "icon": "storefront-outline",
     "name": "Establecimientos",
-    "redirectTo": "/stores",
+    "redirectTo": "/pages/stores",
     "description": "Lista de Establecimientos"
   },
   {
     "icon": "person-circle-outline",
     "name": "Mi Cuenta",
-    "redirectTo": "/my-account",
+    "redirectTo": "/pages/my-account",
     "description": "Ajustes de mi cuenta"
   }
 ]

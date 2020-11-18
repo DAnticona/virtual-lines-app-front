@@ -1,9 +1,9 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar>
+  <ion-toolbar class="background-header">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defaultHref="/pages/home"></ion-back-button>
     </ion-buttons>
-    <ion-title color="primary">{{ title }}</ion-title>
+    <ion-title class="text-white">{{ title }}</ion-title>
     <ion-buttons slot="end">
       <ion-avatar>
         <img [src]="userService.user.image" alt="" />

@@ -1,24 +1,26 @@
-<ion-grid>
-  <ion-row class="ion-justify-content-center">
-    <ion-col size-lg="6" size-md="6" size-xs="12" class="ion-align-self-start">
-      <form ngNativeValidate #f="ngForm" (ngSubmit)="login(f)">
-        <div class="ion-padding ion-text-center">
-          <h1>FreeLine</h1>
-        </div>
-        <div class="ion-text-center">
-          <ion-icon name="person-circle-outline" class="icon-64"></ion-icon>
-        </div>
-        <div class="ion-padding">
+<ion-content class="background-image">
+  <form ngNativeValidate #f="ngForm" (ngSubmit)="login(f)">
+    <ion-grid class="ion-padding">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size-md="3" size-xs="6">
+          <ion-img src="assets/image/logo/logo.svg"></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="9">
           <ion-item [disabled]="loading">
             <ion-input
               type="email"
               [(ngModel)]="user.email"
               name="email"
-              placeholder="Username"
+              placeholder="Email"
               required
             ></ion-input>
           </ion-item>
-
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="9">
           <ion-item [disabled]="loading">
             <ion-input
               type="password"
@@ -28,16 +30,22 @@
               required
             ></ion-input>
           </ion-item>
-        </div>
-
-        <div class="ion-padding">
-          <ion-button [disabled]="loading" type="submit" expand="block">
-            <ion-icon *ngIf="!loading" name="log-in-outline"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="9">
+          <ion-button [disabled]="loading" type="submit" expand="block" color="tertiary">
+            <ion-icon *ngIf="!loading" name="enter-outline"></ion-icon>
             <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
             Login
           </ion-button>
-        </div>
-      </form>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="9">
+          <small class="text-white">¿No tienes cuenta? <a routerLink="/register">Regístrate</a></small>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

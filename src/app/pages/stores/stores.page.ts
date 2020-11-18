@@ -9,15 +9,17 @@ import { StoresService } from '../../services/store/stores.service';
   styleUrls: ['./stores.page.scss'],
 })
 export class StoresPage implements OnInit {
-  stores: Observable<any>;
+  stores: any[] = [];
 
   @ViewChild('lista') lista: IonList;
-  constructor(public storeService: StoresService, private toastController: ToastController) {}
-
-  ngOnInit() {
-    this.stores = this.storeService.getStores();
-    console.log(this.stores);
+  constructor(public storeService: StoresService, private toastController: ToastController) {
+    this.storeService.getStores().subscribe((res: any) => {
+      console.log(res);
+      this.stores = res.object;
+    });
   }
+
+  ngOnInit() {}
 
   async presentToast(message: string) {
     const toast = await this.toastController.create({
@@ -27,16 +29,8 @@ export class StoresPage implements OnInit {
     toast.present();
   }
 
-  favorite(user) {
-    this.presentToast('Guardó en favoritos');
-    this.lista.closeSlidingItems();
-  }
-  share(user) {
-    this.presentToast('Compartido');
-    this.lista.closeSlidingItems();
-  }
-  borrar(user) {
-    this.presentToast('Borrado');
-    this.lista.closeSlidingItems();
-  }
+  // favorite(user) {
+  //   this.presentToast('Guardó en favoritos');
+  //   this.lista.closeSlidingItems();
+  // }
 }
