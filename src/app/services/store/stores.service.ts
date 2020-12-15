@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { CONFIG_PATH } from '../../config/config';
@@ -14,6 +14,7 @@ export class StoresService {
 
   constructor(
     public alertController: AlertController,
+    private toastController: ToastController,
     private http: HttpClient,
     private userService: UserService
   ) {}
@@ -29,6 +30,15 @@ export class StoresService {
     await alert.present();
   }
 
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      color: 'success',
+      message,
+      duration: 2000,
+    });
+    toast.present();
+  }
+
   getStores() {
     const url = `${this.baseUrl}/store`;
 
@@ -40,6 +50,42 @@ export class StoresService {
     };
 
     return this.http.get(url, httpOptions);
+  }
+
+  getStoreById(id: string) {
+    const url = `${this.baseUrl}/store/${id}`;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: `${this.userService.user.token}`,
+        'Content-Type': 'application/json',
+      }),
+    };
+
+    return this.http.get(url, httpOptions);
+  }
+
+  updateStore(store: any) {
+    const url = `${this.baseUrl}/store`;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: `${this.userService.user.token}`,
+        'Content-Type': 'application/json',
+      }),
+    };
+
+    return this.http.post(url, store, httpOptions).pipe(
+      map(res => {
+        this.presentToast(`Datos actualizados`);
+        return true;
+      }),
+      catchError(err => {
+        console.log(err);
+        this.presentAlert('Error', store.publicName, err.error.message);
+        return throwError(err);
+      })
+    );
   }
 
   newStore(store: any) {

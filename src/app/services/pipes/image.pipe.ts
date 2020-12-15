@@ -4,9 +4,17 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'image',
 })
 export class ImagePipe implements PipeTransform {
-  transform(image: string): any {
+  transform(image: string, type: string = 'user'): any {
     if (!image) {
-      return 'assets/image/users/noimage2.jpg';
+      switch (type) {
+        case 'user':
+          image = 'assets/image/users/noimage2.jpg';
+          break;
+        case 'store':
+          image = 'assets/image/stores/noimage.jpg';
+          break;
+      }
+      // return 'assets/image/users/noimage2.jpg';
     }
     return image;
   }

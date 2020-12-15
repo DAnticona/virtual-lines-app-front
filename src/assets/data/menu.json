@@ -3,12 +3,32 @@
     "icon": "storefront-outline",
     "name": "Establecimientos",
     "redirectTo": "/pages/stores",
-    "description": "Lista de Establecimientos"
+    "description": "Lista de Establecimientos",
+    "client": true,
+    "store": false
+  },
+  {
+    "icon": "people-outline",
+    "name": "Filas de atención",
+    "redirectTo": "/pages/lines",
+    "description": "Gestionar filas de atención",
+    "client": false,
+    "store": true
+  },
+  {
+    "icon": "cog-outline",
+    "name": "Configuración",
+    "redirectTo": "/pages/configuration",
+    "description": "Configuración de la tienda",
+    "client": false,
+    "store": true
   },
   {
     "icon": "person-circle-outline",
     "name": "Mi Cuenta",
     "redirectTo": "/pages/my-account",
-    "description": "Ajustes de mi cuenta"
+    "description": "Ajustes de mi cuenta",
+    "client": true,
+    "store": true
   }
 ]

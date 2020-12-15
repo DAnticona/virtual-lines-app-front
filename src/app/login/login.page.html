@@ -35,7 +35,7 @@
       <ion-row class="ion-justify-content-center">
         <ion-col size="9">
           <ion-button [disabled]="loading" type="submit" expand="block" color="tertiary">
-            <ion-icon *ngIf="!loading" name="enter-outline"></ion-icon>
+            <ion-icon slot="start" *ngIf="!loading" name="enter-outline"></ion-icon>
             <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
             Login
           </ion-button>

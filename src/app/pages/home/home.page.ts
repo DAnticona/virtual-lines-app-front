@@ -13,6 +13,5 @@ export class HomePage implements OnInit {
   constructor(private menuService: MenuService, public userService: UserService) {}
   ngOnInit() {
     this.menus = this.menuService.getMenuOptions();
-    console.log(this.menus);
   }
 }

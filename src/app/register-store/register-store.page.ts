@@ -7,7 +7,15 @@ import { CategoryService } from '../services/category/category.service';
 import { SubcategoryService } from '../services/category/subcategory.service';
 import { StoresService } from '../services/store/stores.service';
 
-// declare var google: any;
+declare var google: any;
+
+interface Marker {
+  position: {
+    lat: number;
+    lng: number;
+  };
+  title: string;
+}
 
 @Component({
   selector: 'app-register-store',
@@ -20,9 +28,11 @@ export class RegisterStorePage implements OnInit {
   store: any = {};
   categories: any[] = [];
   subcategories: any[] = [];
+  latitude: number;
+  longitude: number;
 
-  // map: any;
-  // @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
+  map = null;
+  markers = [];
 
   constructor(
     public storeService: StoresService,
@@ -34,6 +44,11 @@ export class RegisterStorePage implements OnInit {
   ) {
     this.initStore();
     this.createForm();
+
+    this.categoryService.getCategories().subscribe((res: any) => {
+      this.categories = res.object;
+      console.log(this.categories);
+    });
   }
 
   initStore() {
@@ -42,10 +57,7 @@ export class RegisterStorePage implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryService.getCategories().subscribe((res: any) => {
-      this.categories = res.object;
-      console.log(this.categories);
-    });
+    this.loadMap();
   }
 
   selectCategory(categoryId: string) {
@@ -92,8 +104,8 @@ export class RegisterStorePage implements OnInit {
     this.store.email = this.email.value;
     this.store.password = this.password1.value;
 
-    this.store.latitude = -136.123;
-    this.store.longitude = -12.123;
+    this.store.latitude = this.latitude;
+    this.store.longitude = this.longitude;
 
     this.storeService.newStore(this.store).subscribe(
       () => {
@@ -105,6 +117,45 @@ export class RegisterStorePage implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  loadMap() {
+    const mapElement: HTMLElement = document.getElementById('map');
+
+    const initialLocation = { lat: -12.045951958107082, lng: -77.03055381774902 };
+
+    this.map = new google.maps.Map(mapElement, {
+      center: initialLocation,
+      zoom: 12,
+    });
+
+    this.addMarker(initialLocation);
+
+    google.maps.event.addListener(this.map, 'click', (event: any) => {
+      console.log(event.latLng.toJSON());
+
+      this.latitude = event.latLng.toJSON().lat;
+      this.longitude = event.latLng.toJSON().lng;
+      // console.log(this.latitude, this.longitude);
+
+      this.addMarker(event.latLng);
+    });
+  }
+
+  addMarker(location) {
+    const marker = new google.maps.Marker({
+      position: location,
+      map: this.map,
+    });
+    this.cleanMarkers();
+    this.markers.push(marker);
+  }
+
+  cleanMarkers() {
+    for (const marker of this.markers) {
+      marker.setMap(null);
+    }
+    this.markers = [];
   }
 
   // Getters
@@ -138,18 +189,4 @@ export class RegisterStorePage implements OnInit {
   get password2() {
     return this.form.get('password2');
   }
-
-  // ionViewDidEnter() {
-  //   this.showmap();
-  // }
-
-  // showmap() {
-  //   const location = new google.mapsLatLng(-17.824858, 31.053028);
-  //   const options = {
-  //     center: location,
-  //     zoom: 15,
-  //     disableDefaultUI: true,
-  //   };
-  //   this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-  // }
 }

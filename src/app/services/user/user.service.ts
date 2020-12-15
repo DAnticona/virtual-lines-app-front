@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { catchError, map } from 'rxjs/operators';
@@ -64,7 +64,6 @@ export class UserService {
   logout() {
     this.user = null;
     localStorage.removeItem('user');
-
     this.router.navigate(['/login']);
   }
 
@@ -72,6 +71,25 @@ export class UserService {
     const url = `${this.baseUrl}/register/user/new-client-user`;
 
     return this.http.post(url, user).pipe(
+      map(res => {
+        this.presentAlert('Muy Bien', user.email, 'Registro exitoso');
+        if (user.userId === this.user.userId) {
+          this.saveStorage(user);
+        }
+        return true;
+      }),
+      catchError(err => {
+        console.log(err);
+        this.presentAlert('Error', user.email, err.error.message);
+        return throwError(err);
+      })
+    );
+  }
+
+  newStoreUser(user: any) {
+    const url = `${this.baseUrl}/user`;
+
+    return this.http.post(url, user, this.getHeaders()).pipe(
       map(res => {
         this.presentAlert('Muy Bien', user.email, 'Registro exitoso');
         return true;
@@ -82,5 +100,44 @@ export class UserService {
         return throwError(err);
       })
     );
+  }
+
+  changePassword(user: any) {
+    const url = `${this.baseUrl}/user/password`;
+
+    return this.http.post(url, user, this.getHeaders()).pipe(
+      map(res => {
+        this.presentAlert('Muy Bien', user.email, 'Registro exitoso');
+        return true;
+      }),
+      catchError(err => {
+        console.log(err);
+        this.presentAlert('Error', user.email, err.error.message);
+        return throwError(err);
+      })
+    );
+  }
+
+  getUsersByStoreId(id: string) {
+    const url = `${this.baseUrl}/store/${id}/users`;
+
+    return this.http.get(url, this.getHeaders());
+  }
+
+  getUserByEmail(email: string) {
+    const url = `${this.baseUrl}/user/${email}`;
+
+    return this.http.get(url, this.getHeaders());
+  }
+
+  private getHeaders() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: `${this.user.token}`,
+        'Content-Type': 'application/json',
+      }),
+    };
+
+    return httpOptions;
   }
 }

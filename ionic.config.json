@@ -1,7 +1,10 @@
 {
   "name": "virtual-lines-front",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {
+      "enabled": false
+    },
+    "cordova": {}
   },
   "type": "angular"
 }

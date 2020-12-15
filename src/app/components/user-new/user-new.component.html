@@ -1,0 +1,97 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="background-header">
+    <ion-title class="text-white">Detalle del Usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding background-image">
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <ion-grid>
+      <ion-row class="ion-justify-content-evenly">
+        <ion-col size="12">
+          <ion-list class="ion-padding">
+            <ion-item [disabled]="loading">
+              <ion-label position="floating">Nombre</ion-label>
+              <ion-input type="text" name="name" formControlName="name"></ion-input>
+            </ion-item>
+            <ion-list *ngIf="name.invalid && name.touched" lines="none">
+              <ion-item>
+                <ion-text color="danger">
+                  <small>Ingrese un nombre</small>
+                </ion-text>
+              </ion-item>
+            </ion-list>
+            <ion-item [disabled]="loading">
+              <ion-label position="floating">Email</ion-label>
+              <ion-input type="email" name="email" formControlName="email"></ion-input>
+            </ion-item>
+            <ion-list *ngIf="email.invalid && email.touched" lines="none">
+              <ion-item>
+                <ion-text color="danger">
+                  <small>ingrese un email válido</small>
+                </ion-text>
+              </ion-item>
+            </ion-list>
+            <ion-item>
+              <ion-label>Rol</ion-label>
+              <ion-select placeholder="Seleccione" name="roleId" formControlName="roleId">
+                <ion-select-option [value]="role.roleId" *ngFor="let role of roles | async">
+                  {{ role.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-list *ngIf="roleId.invalid && roleId.touched" lines="2">
+              <ion-item>
+                <ion-text color="danger">
+                  <small>Seleccione un rol</small>
+                </ion-text>
+              </ion-item>
+            </ion-list>
+            <ion-item>
+              <ion-label>Activo</ion-label>
+              <ion-checkbox color="success" slot="end" formControlName="activeFg"></ion-checkbox>
+            </ion-item>
+            <ion-item [disabled]="loading">
+              <ion-label position="floating">Contraseña</ion-label>
+              <ion-input type="password" name="password1" formControlName="password1"></ion-input>
+            </ion-item>
+            <ion-list *ngIf="password1.invalid && password1.touched" lines="none">
+              <ion-item>
+                <ion-text color="danger">
+                  <small>Ingrese una contraseña</small>
+                </ion-text>
+              </ion-item>
+            </ion-list>
+            <ion-item [disabled]="loading">
+              <ion-label position="floating">Repetir Contraseña</ion-label>
+              <ion-input type="password" name="password2" formControlName="password2"></ion-input>
+            </ion-item>
+            <ion-list *ngIf="password2.invalid && password2.touched" lines="none">
+              <ion-item>
+                <ion-text color="danger">
+                  <small>Las contraseñas no coinciden</small>
+                </ion-text>
+              </ion-item>
+            </ion-list>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding ion-justify-content-center">
+        <ion-col size="6">
+          <ion-button (click)="dismiss()" color="dark" [disabled]="loading" type="button" expand="block">
+            <ion-icon *ngIf="!loading" slot="start" name="arrow-back-outline"></ion-icon>
+            <ion-spinner *ngIf="loading" slot="start" name="dots"></ion-spinner>
+            Volver
+          </ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button color="tertiary" [disabled]="loading" type="submit" expand="block">
+            <ion-icon *ngIf="!loading" slot="start" name="save-outline"></ion-icon>
+            <ion-spinner *ngIf="loading" slot="start" name="dots"></ion-spinner>
+            Guardar
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

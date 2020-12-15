@@ -8,8 +8,18 @@ import { RegisterStorePageRoutingModule } from './register-store-routing.module'
 
 import { RegisterStorePage } from './register-store.page';
 
+import { AgmCoreModule } from '@agm/core';
+
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, IonicModule, RegisterStorePageRoutingModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    IonicModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDcNRcy02sBgI0YttiiKob_8diepj2_pjE',
+    }),
+    RegisterStorePageRoutingModule,
+  ],
   declarations: [RegisterStorePage],
 })
 export class RegisterStorePageModule {}

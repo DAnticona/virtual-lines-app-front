@@ -1,0 +1,19 @@
+<app-header title="General"></app-header>
+<ion-content class="background-image">
+  <ion-grid style="height: 100%">
+    <ion-row style="height: 90%">
+      <ion-col size="12">
+        <div id="map"></div>
+      </ion-col>
+    </ion-row>
+    <ion-row style="height: 10%">
+      <ion-col size="12">
+        <ion-button [disabled]="loading" color="tertiary" type="button" expand="block" (click)="save()">
+          <ion-icon class="ion-padding" *ngIf="!loading" name="save-outline"></ion-icon>
+          <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
+          Actualizar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

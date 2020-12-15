@@ -1,0 +1,46 @@
+<app-header [title]="store.publicName"></app-header>
+
+<ion-content class="background-image">
+  <ion-card>
+    <img [src]="store.image | image: 'store'" />
+    <ion-card-header>
+      <ion-card-subtitle>
+        <ion-label>
+          <ion-icon slot="start" name="call"></ion-icon>
+          {{store.phone}}
+        </ion-label>
+      </ion-card-subtitle>
+      <ion-card-title>{{store.publicName}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content> {{store.description}} </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Filas activas
+        <ion-badge color="primary" mode="ios">{{linesNumber}}</ion-badge>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-item (click)="inOut(line)" *ngFor="let line of lines">
+      <ion-icon slot="start" name="people"></ion-icon>
+      <ion-label [color]="line.isExists ? 'danger' : 'success'">{{line.name}}</ion-label>
+      <ion-icon
+        slot="end"
+        [color]="line.isExists ? 'danger' : 'success'"
+        [name]="line.isExists ? 'remove-circle' : 'add-circle'"
+      ></ion-icon>
+    </ion-item>
+  </ion-card>
+
+  <ion-card>
+    <ion-grid style="height: 100%">
+      <ion-row style="height: 100%">
+        <ion-col size="12">
+          <div id="map"></div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</ion-content>
