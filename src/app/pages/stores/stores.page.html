@@ -1,6 +1,16 @@
 <app-header title="Establecimientos"></app-header>
 
 <ion-content class="background-image">
+  <ion-refresher slot="fixed" (ionRefresh)="getStores($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle"
+      pullingText="Actualizar"
+      color="danger"
+      refreshingSpinner="lines"
+      refreshingText="Actualizando..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-list #lista *ngIf="stores">
     <ion-item-sliding *ngFor="let store of stores">
       <ion-item [routerLink]="['/pages/store-detail', store.storeId]">

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../../../services/user/user.service';
-import { AlertController, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { UserNewComponent } from '../../../components/user-new/user-new.component';
 import { UserEditComponent } from '../../../components/user-edit/user-edit.component';
 
@@ -9,28 +9,24 @@ import { UserEditComponent } from '../../../components/user-edit/user-edit.compo
   templateUrl: './users-store.page.html',
   styleUrls: ['./users-store.page.scss'],
 })
-export class UsersStorePage implements OnInit {
+export class UsersStorePage {
   loading: boolean;
   users: any[] = [];
   store: any = {};
   user: any = {};
 
-  constructor(
-    public userService: UserService,
-    public alertController: AlertController,
-    public modalController: ModalController
-  ) {
+  constructor(public userService: UserService, public modalController: ModalController) {
     this.loading = false;
     this.store = this.userService.user.store;
     this.getUsers();
   }
 
-  ngOnInit() {}
-
-  getUsers() {
+  getUsers(event?: any) {
     this.userService.getUsersByStoreId(this.store.storeId).subscribe((res: any) => {
       this.users = res.object;
-      console.log(this.users);
+      if (event) {
+        event.target.complete();
+      }
     });
   }
 
@@ -42,14 +38,9 @@ export class UsersStorePage implements OnInit {
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
-    console.log(data);
-    if (data.back) {
+    if (data.refresh) {
       this.getUsers();
     }
-  }
-
-  newUser() {
-    this.saveUser();
   }
 
   async saveUser(user?: any) {

@@ -18,6 +18,19 @@ export class GeneralPage {
     this.createForm();
   }
 
+  getStore(storeId: string, event?: any) {
+    this.storeService.getStoreById(storeId).subscribe((res: any) => {
+      this.store = res.object;
+      this.publicName.setValue(this.store.publicName);
+      this.website.setValue(this.store.website);
+      this.phone.setValue(this.store.phone);
+      this.description.setValue(this.store.description);
+      if (event) {
+        event.target.complete();
+      }
+    });
+  }
+
   createForm() {
     this.form = this.fb.group({
       publicName: [this.store.publicName, Validators.required],
@@ -35,12 +48,12 @@ export class GeneralPage {
     this.store.description = this.description.value;
 
     this.storeService.updateStore(this.store).subscribe(
-      res => {
+      () => {
         this.userService.user.store = this.store;
-        this.userService.saveStorage(this.userService.user);
+        this.userService.saveStorage(this.userService.user, this.userService.token);
         this.loading = false;
       },
-      err => {
+      () => {
         this.loading = false;
       }
     );

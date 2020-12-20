@@ -8,9 +8,10 @@ import { MyAccountPageRoutingModule } from './my-account-routing.module';
 
 import { MyAccountPage } from './my-account.page';
 import { SharedModule } from '../../shared/shared.module';
+import { PipesModule } from '../../services/pipes/pipes.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, MyAccountPageRoutingModule, SharedModule],
+  imports: [CommonModule, FormsModule, IonicModule, MyAccountPageRoutingModule, SharedModule, PipesModule],
   declarations: [MyAccountPage],
 })
 export class MyAccountPageModule {}

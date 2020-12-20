@@ -1,10 +1,21 @@
 <app-header title="General"></app-header>
+
 <ion-content class="background-image">
+  <ion-refresher slot="fixed" (ionRefresh)="getStore(store.storeId, $event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle"
+      pullingText="Actualizar"
+      color="danger"
+      refreshingSpinner="lines"
+      refreshingText="Actualizando..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
   <form style="height: 100%" [formGroup]="form" (submit)="save()">
     <ion-grid style="height: 100%">
       <ion-row style="height: 90%">
         <ion-col size="12">
-          <ion-list>
+          <ion-list class="ion-no-padding">
             <ion-item>
               <ion-label *ngIf="true" position="floating">Nombre del establecimiento</ion-label>
               <ion-input type="text" name="publicName" formControlName="publicName"></ion-input>

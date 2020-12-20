@@ -2,21 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ValidatorsService } from '../services/validators/validators.service';
-import { UserService } from '../services/user/user.service';
 import { CategoryService } from '../services/category/category.service';
 import { SubcategoryService } from '../services/category/subcategory.service';
 import { StoresService } from '../services/store/stores.service';
 
 declare var google: any;
-
-interface Marker {
-  position: {
-    lat: number;
-    lng: number;
-  };
-  title: string;
-}
-
 @Component({
   selector: 'app-register-store',
   templateUrl: './register-store.page.html',
@@ -42,12 +32,14 @@ export class RegisterStorePage implements OnInit {
     public router: Router,
     private fb: FormBuilder
   ) {
+    this.latitude = -12.045993928475266;
+    this.longitude = -77.03055381774902;
+
     this.initStore();
     this.createForm();
 
     this.categoryService.getCategories().subscribe((res: any) => {
       this.categories = res.object;
-      console.log(this.categories);
     });
   }
 
@@ -110,7 +102,6 @@ export class RegisterStorePage implements OnInit {
     this.storeService.newStore(this.store).subscribe(
       () => {
         this.loading = false;
-        this.form.reset();
         this.router.navigate(['login']);
       },
       () => {
@@ -122,7 +113,7 @@ export class RegisterStorePage implements OnInit {
   loadMap() {
     const mapElement: HTMLElement = document.getElementById('map');
 
-    const initialLocation = { lat: -12.045951958107082, lng: -77.03055381774902 };
+    const initialLocation = { lat: this.latitude, lng: this.longitude };
 
     this.map = new google.maps.Map(mapElement, {
       center: initialLocation,
@@ -132,11 +123,9 @@ export class RegisterStorePage implements OnInit {
     this.addMarker(initialLocation);
 
     google.maps.event.addListener(this.map, 'click', (event: any) => {
-      console.log(event.latLng.toJSON());
-
+      console.log(event.latLng.toJSON().lat, event.latLng.toJSON().lng);
       this.latitude = event.latLng.toJSON().lat;
       this.longitude = event.latLng.toJSON().lng;
-      // console.log(this.latitude, this.longitude);
 
       this.addMarker(event.latLng);
     });

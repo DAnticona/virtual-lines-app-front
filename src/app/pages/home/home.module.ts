@@ -6,9 +6,10 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { SharedModule } from '../../shared/shared.module';
+import { PipesModule } from '../../services/pipes/pipes.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, HomePageRoutingModule, SharedModule],
+  imports: [CommonModule, FormsModule, IonicModule, HomePageRoutingModule, SharedModule, PipesModule],
   declarations: [HomePage],
 })
 export class HomePageModule {}

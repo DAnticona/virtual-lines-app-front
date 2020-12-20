@@ -1,10 +1,20 @@
-<app-header title="Detalles de la Fila"></app-header>
+<app-header [title]="line.name"></app-header>
 
 <ion-content class="background-image">
+  <ion-refresher slot="fixed" (ionRefresh)="getSlots(line.lineId, $event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle"
+      pullingText="Actualizar"
+      color="danger"
+      refreshingSpinner="lines"
+      refreshingText="Actualizando..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-grid *ngIf="slots" style="height: 100%">
     <ion-row style="height: 80%">
       <ion-col size="12">
-        <ion-list #lista>
+        <ion-list class="ion-no-padding" #lista>
           <ion-item-sliding *ngFor="let slot of slots">
             <ion-item>
               <ion-avatar slot="start">

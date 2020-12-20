@@ -63,7 +63,6 @@ export class RegisterClientPage implements OnInit {
   ngOnInit() {}
 
   save() {
-    console.log(this.form);
     if (!this.form.valid) {
       return Object.values(this.form.controls).forEach(control => {
         control.markAsTouched();

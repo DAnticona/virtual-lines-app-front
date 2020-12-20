@@ -5,6 +5,7 @@ import { IonList, AlertController } from '@ionic/angular';
 import { SlotService } from '../../services/slot/slot.service';
 import { LinesService } from '../../services/lines/lines.service';
 import { UserService } from '../../services/user/user.service';
+import { AlertService } from '../../services/alert/alert.service';
 
 @Component({
   selector: 'app-line-detail',
@@ -23,6 +24,7 @@ export class LineDetailPage {
     public slotService: SlotService,
     public linesService: LinesService,
     public userService: UserService,
+    private alertService: AlertService,
     public activatedRoute: ActivatedRoute,
     public alertController: AlertController
   ) {
@@ -30,6 +32,7 @@ export class LineDetailPage {
       const id = param.id;
       this.linesService.getLine(id).subscribe((res: any) => {
         this.line = res.object;
+        console.log(this.line);
         this.getSlots(this.line.lineId);
       });
     });
@@ -51,7 +54,6 @@ export class LineDetailPage {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => {},
         },
         {
           text: 'Ok',
@@ -68,34 +70,20 @@ export class LineDetailPage {
     await alert.present();
   }
 
-  async openClientNotFound(email: string) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Cliente desconocido',
-      subHeader: email,
-      message: 'No se pudo encontrar este cliente',
-      buttons: [
-        {
-          text: 'Ok',
-        },
-      ],
-    });
-
-    await alert.present();
-  }
-
-  getSlots(lineId: string) {
+  getSlots(lineId: string, event?: any) {
     this.slotService.getSlotsActivesByLineId(lineId).subscribe((res: any) => {
       this.slots = res.object;
       this.slots.sort((a, b) => a.startDate - b.startDate);
       this.slots.forEach(slot => {
         slot.startDate = new Date(slot.startDate);
       });
+      if (event) {
+        event.target.complete();
+      }
     });
   }
 
   attend(slot: any, attended: boolean) {
-    console.log(slot);
     slot.activeFg = 'N';
     slot.attendedFg = attended ? 'S' : 'N';
     slot.endDate = new Date().getTime();
@@ -125,7 +113,7 @@ export class LineDetailPage {
         };
         this.save(this.slot);
       } else {
-        this.openClientNotFound(email);
+        this.alertService.presentAlert('¡Upps!', 'No se encontró el cliente', email);
       }
     });
   }

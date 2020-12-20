@@ -14,16 +14,22 @@ export class StoresPage {
 
   @ViewChild('lista') lista: IonList;
   constructor(public storeService: StoresService, public lineService: LinesService) {
+    this.getStores();
+  }
+
+  getStores(event?: any) {
     this.storeService.getStores().subscribe((res: any) => {
       const stores = res.object;
-      this.stores = [];
       stores.forEach(store => {
         this.lineService.getLinesByStoreId(store.storeId).subscribe((res1: any) => {
           store.linesNumber = res1.count;
-          this.stores.push(store);
-          this.stores.sort((a, b) => (a.publicName < b.publicName ? -1 : 1));
         });
       });
+      stores.sort((a, b) => (a.publicName < b.publicName ? -1 : 1));
+      this.stores = stores;
+      if (event) {
+        event.target.complete();
+      }
     });
   }
 }

@@ -88,7 +88,6 @@ export class UserEditComponent implements OnInit {
     setTimeout(() => {
       this.name.setValue(user.name);
       this.email.setValue(user.email);
-      console.log(user.role.roleId);
       this.roleId.setValue(user.role.roleId);
       this.activeFg.setValue(user.activeFg === 'S' ? true : false);
     });
@@ -138,9 +137,9 @@ export class UserEditComponent implements OnInit {
     );
   }
 
-  dismiss(back: boolean) {
+  dismiss(refresh: boolean) {
     this.modalController.dismiss({
-      back,
+      refresh,
     });
   }
 

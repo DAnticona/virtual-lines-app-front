@@ -1,20 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { newArray } from '@angular/compiler/src/util';
-import { AlertController, ToastController, IonList } from '@ionic/angular';
+import { AlertController, IonList } from '@ionic/angular';
 import { LinesService } from '../../services/lines/lines.service';
 import { UserService } from '../../services/user/user.service';
 import { SlotService } from '../../services/slot/slot.service';
+import { AlertService } from '../../services/alert/alert.service';
 
 @Component({
   selector: 'app-lines',
   templateUrl: './lines.page.html',
   styleUrls: ['./lines.page.scss'],
 })
-export class LinesPage implements OnInit {
+export class LinesPage {
   skeletons: any[] = newArray(30);
   lines: any[];
   line: any;
-  newLineName: string;
   store: any;
 
   @ViewChild('lista') lista: IonList;
@@ -24,13 +24,13 @@ export class LinesPage implements OnInit {
     public userService: UserService,
     public slotService: SlotService,
     public alertController: AlertController,
-    private toastController: ToastController
+    private alertSerice: AlertService
   ) {
     this.store = this.userService.user.store;
     this.getLines();
   }
 
-  getLines() {
+  getLines(event?: any) {
     this.linesService.getLinesByStoreId(this.store.storeId).subscribe((res: any) => {
       const lines = res.object;
       this.lines = [];
@@ -41,10 +41,11 @@ export class LinesPage implements OnInit {
           this.lines.sort((a, b) => (a.name < b.name ? -1 : 1));
         });
       });
+      if (event) {
+        event.target.complete();
+      }
     });
   }
-
-  ngOnInit() {}
 
   async newLine() {
     const alert = await this.alertController.create({
@@ -64,8 +65,6 @@ export class LinesPage implements OnInit {
           cssClass: 'secondary',
           handler: () => {
             this.line = null;
-            this.newLineName = null;
-            console.log(this.newLineName);
           },
         },
         {
@@ -79,7 +78,6 @@ export class LinesPage implements OnInit {
               storeId: this.store.storeId,
               activeFg: 'S',
             };
-            console.log(this.line);
             this.save(this.line);
           },
         },
@@ -89,27 +87,13 @@ export class LinesPage implements OnInit {
     await alert.present();
   }
 
-  // async presentAlert(header: string, subHeader: string, message: string) {
-  //   const alert = await this.alertController.create({
-  //     header,
-  //     subHeader,
-  //     message,
-  //     buttons: ['OK'],
-  //   });
-
-  //   await alert.present();
-  // }
-
-  // async presentToast(message: string) {
-  //   const toast = await this.toastController.create({
-  //     message,
-  //     duration: 2000,
-  //   });
-  //   toast.present();
-  // }
-
   delete(line: any) {
     this.lista.closeSlidingItems();
+    if (line.slotsNumber > 0) {
+      this.alertSerice.presentAlert('¡Error!', 'No puede eliminar esta fila', 'Existen usuarios esperando');
+      console.log('hay usuarios');
+      return;
+    }
     line.activeFg = 'N';
     line.storeId = this.store.storeId;
     this.save(line);

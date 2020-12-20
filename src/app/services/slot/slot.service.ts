@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UserService } from '../user/user.service';
-import { CONFIG_PATH } from '../../config/config';
-import { AlertController, ToastController } from '@ionic/angular';
-import { map, catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { AlertService } from '../alert/alert.service';
+import { HttpService } from '../http/http.service';
+import { CONFIG_PATH } from '../../config/config';
 
 @Injectable({
   providedIn: 'root',
@@ -13,76 +13,34 @@ export class SlotService {
   baseUrl = CONFIG_PATH;
 
   constructor(
-    private http: HttpClient,
-    private userService: UserService,
-    public alertController: AlertController,
-    private toastController: ToastController
+    private alertService: AlertService,
+    private httpService: HttpService,
+    private http: HttpClient
   ) {}
-
-  async presentAlert(header: string, subHeader: string, message: string) {
-    const alert = await this.alertController.create({
-      header,
-      subHeader,
-      message,
-      buttons: ['OK'],
-    });
-
-    await alert.present();
-  }
-
-  async presentToast(message: string) {
-    const toast = await this.toastController.create({
-      color: 'success',
-      message,
-      duration: 2000,
-    });
-    toast.present();
-  }
 
   getSlotsActivesByLineId(id: string) {
     const url = `${this.baseUrl}/slot/line/${id}`;
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: `${this.userService.user.token}`,
-        'Content-Type': 'application/json',
-      }),
-    };
-
-    return this.http.get(url, httpOptions);
+    return this.http.get(url, this.httpService.getHttpOptions());
   }
 
   getSlotActiveByLineIdUserId(lineId: string, userId: string) {
     const url = `${this.baseUrl}/slot/line/${lineId}/user/${userId}`;
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: `${this.userService.user.token}`,
-        'Content-Type': 'application/json',
-      }),
-    };
-
-    return this.http.get(url, httpOptions);
+    return this.http.get(url, this.httpService.getHttpOptions());
   }
 
   saveSlot(slot: any) {
     const url = `${this.baseUrl}/slot`;
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: `${this.userService.user.token}`,
-        'Content-Type': 'application/json',
-      }),
-    };
-
-    return this.http.post(url, slot, httpOptions).pipe(
-      map(res => {
-        this.presentToast(`Datos actualizados`);
+    return this.http.post(url, slot, this.httpService.getHttpOptions()).pipe(
+      map(() => {
+        this.alertService.presentToast(`Datos actualizados`, 'success');
         return true;
       }),
       catchError(err => {
         console.log(err);
-        this.presentAlert('Error', 'slot.user.name', err.error.message);
+        this.alertService.presentAlert('Error', 'slot.user.name', err.error.message);
         return throwError(err);
       })
     );

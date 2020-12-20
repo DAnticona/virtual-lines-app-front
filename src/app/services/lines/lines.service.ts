@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UserService } from '../user/user.service';
-import { CONFIG_PATH } from '../../config/config';
-import { map, catchError } from 'rxjs/operators';
-import { AlertController, ToastController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { AlertService } from '../alert/alert.service';
+import { HttpService } from '../http/http.service';
+import { CONFIG_PATH } from '../../config/config';
 
 @Injectable({
   providedIn: 'root',
@@ -14,75 +14,37 @@ export class LinesService {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService,
-    public alertController: AlertController,
-    private toastController: ToastController
+    private httpService: HttpService,
+    private alertService: AlertService
   ) {}
-
-  async presentAlert(header: string, subHeader: string, message: string) {
-    const alert = await this.alertController.create({
-      header,
-      subHeader,
-      message,
-      buttons: ['OK'],
-    });
-
-    await alert.present();
-  }
-
-  async presentToast(message: string) {
-    const toast = await this.toastController.create({
-      color: 'success',
-      message,
-      duration: 2000,
-    });
-    toast.present();
-  }
 
   getLine(id: string) {
     const url = `${this.baseUrl}/line/${id}`;
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: `${this.userService.user.token}`,
-        'Content-Type': 'application/json',
-      }),
-    };
-
-    return this.http.get(url, httpOptions);
+    return this.http.get(url, this.httpService.getHttpOptions());
   }
 
   getLinesByStoreId(id: string) {
     const url = `${this.baseUrl}/line/store/${id}`;
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: `${this.userService.user.token}`,
-        'Content-Type': 'application/json',
-      }),
-    };
-
-    return this.http.get(url, httpOptions);
+    return this.http.get(url, this.httpService.getHttpOptions());
   }
 
   newLine(line: any) {
     const url = `${this.baseUrl}/line`;
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: `${this.userService.user.token}`,
-        'Content-Type': 'application/json',
-      }),
-    };
+    return this.http.post(url, line, this.httpService.getHttpOptions()).pipe(
+      map(() => {
+        const message = line.lineId
+          ? `Fila: ${line.name} elimnada exitosamente`
+          : `Fila: ${line.name} registrada exitosamente`;
 
-    return this.http.post(url, line, httpOptions).pipe(
-      map(res => {
-        this.presentToast(`Fila: ${line.name} registrada exitosamente`);
+        this.alertService.presentToast(message, 'success');
         return true;
       }),
       catchError(err => {
         console.log(err);
-        this.presentAlert('Error', line.name, err.error.message);
+        this.alertService.presentAlert('Error', line.name, err.error.message);
         return throwError(err);
       })
     );
@@ -91,21 +53,14 @@ export class LinesService {
   deleteLine(id: string) {
     const url = `${this.baseUrl}/line/${id}`;
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: `${this.userService.user.token}`,
-        'Content-Type': 'application/json',
-      }),
-    };
-
-    return this.http.delete(url, httpOptions).pipe(
+    return this.http.delete(url, this.httpService.getHttpOptions()).pipe(
       map(res => {
-        this.presentToast(`Fila eliminada exitosamente`);
+        this.alertService.presentToast(`Fila eliminada exitosamente`, 'success');
         return true;
       }),
       catchError(err => {
         console.log(err);
-        this.presentAlert('Error', 'Fila no eliminada', err.error.message);
+        this.alertService.presentAlert('Error', 'Fila no eliminada', err.error.message);
         return throwError(err);
       })
     );

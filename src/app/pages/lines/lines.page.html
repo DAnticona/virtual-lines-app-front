@@ -1,12 +1,22 @@
 <app-header title="Gestión de Filas"></app-header>
 
 <ion-content class="background-image">
+  <ion-refresher slot="fixed" (ionRefresh)="getLines($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle"
+      pullingText="Actualizar"
+      color="danger"
+      refreshingSpinner="lines"
+      refreshingText="Actualizando..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-grid *ngIf="lines" style="height: 100%">
     <ion-row style="height: 80%">
       <ion-col size="12">
-        <ion-list #lista *ngIf="lines.length > 0">
+        <ion-list class="ion-no-padding" #lista>
           <ion-item-sliding *ngFor="let line of lines">
-            <ion-item [routerLink]="['/pages/line-detail', line.lineId]">
+            <ion-item detail button [routerLink]="['/pages/line-detail', line.lineId]">
               <ion-label>
                 <h3>{{line.name}}</h3>
               </ion-label>

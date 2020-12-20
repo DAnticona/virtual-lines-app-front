@@ -1,8 +1,18 @@
 <app-header [title]="store.publicName"></app-header>
 
 <ion-content class="background-image">
+  <ion-refresher slot="fixed" (ionRefresh)="getStore(store.storeId, $event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle"
+      pullingText="Actualizar"
+      color="danger"
+      refreshingSpinner="lines"
+      refreshingText="Actualizando..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-card>
-    <img [src]="store.image | image: 'store'" />
+    <ion-img [src]="store.image | image: 'store'"></ion-img>
     <ion-card-header>
       <ion-card-subtitle>
         <ion-label>
@@ -19,7 +29,7 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>
-        Filas activas
+        Filas
         <ion-badge color="primary" mode="ios">{{linesNumber}}</ion-badge>
       </ion-card-title>
     </ion-card-header>

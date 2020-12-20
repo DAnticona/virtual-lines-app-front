@@ -27,16 +27,13 @@
 
 // Personalizados
 .background-image {
-  // --background: url(../../assets/image/logo/background_login.jpg) 60% 60%/350% no-repeat;
-  // --ion-background-color: #683a3a;
-  // --background: rgba(0, 0, 0, 0.8);
-  // --background: url('../../assets/image/logo/background_login.jpg') no-repeat center center / cover;
   --background: linear-gradient(rgba(80, 40, 40, 0.5), rgba(80, 40, 40, 0.5)),
     url(assets/image/logo/background_login.jpg) no-repeat center center / cover;
 }
 
 .background-header {
   --background: #5a162e;
+  background-color: #5a162e;
 }
 
 .background-secondary {

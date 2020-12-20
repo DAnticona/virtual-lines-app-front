@@ -1,11 +1,21 @@
 <app-header title="General"></app-header>
 
 <ion-content class="background-image">
+  <ion-refresher slot="fixed" (ionRefresh)="getUsers($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle"
+      pullingText="Actualizar"
+      color="danger"
+      refreshingSpinner="lines"
+      refreshingText="Actualizando..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-grid style="height: 100%">
     <ion-row style="height: 90%">
       <ion-col size="12">
-        <ion-list>
-          <ion-item *ngFor="let user of users">
+        <ion-list class="ion-no-padding">
+          <ion-item detail button (click)="updateUser(user)" *ngFor="let user of users">
             <ion-icon
               *ngIf="user.activeFg=='S'"
               slot="start"
@@ -14,16 +24,13 @@
             ></ion-icon>
             <ion-icon *ngIf="user.activeFg=='N'" slot="start" color="medium" name="close-circle"></ion-icon>
             <ion-label>{{user.name}}</ion-label>
-            <ion-button (click)="updateUser(user)" slot="end" expand="block" fill="clear" shape="round">
-              <ion-icon name="create-outline"></ion-icon>
-            </ion-button>
           </ion-item>
         </ion-list>
       </ion-col>
     </ion-row>
     <ion-row style="height: 10%">
       <ion-col size="12">
-        <ion-button [disabled]="loading" color="tertiary" (click)="newUser()" type="submit" expand="block">
+        <ion-button [disabled]="loading" color="tertiary" (click)="saveUser()" type="submit" expand="block">
           <ion-icon class="ion-padding" *ngIf="!loading" name="add"></ion-icon>
           <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
           Nuevo usuario

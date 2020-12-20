@@ -14,7 +14,6 @@ export class ImagePipe implements PipeTransform {
           image = 'assets/image/stores/noimage.jpg';
           break;
       }
-      // return 'assets/image/users/noimage2.jpg';
     }
     return image;
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { AlertController } from '@ionic/angular';
 
@@ -7,17 +7,23 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './my-account.page.html',
   styleUrls: ['./my-account.page.scss'],
 })
-export class MyAccountPage implements OnInit {
+export class MyAccountPage {
   loading = false;
   user: any = {};
   constructor(public userService: UserService, public alertController: AlertController) {
-    console.log(this.userService.user);
     this.user = this.userService.user;
     this.user.storeId = this.userService.user.store ? this.userService.user.store.storeId : null;
     this.user.roleId = this.userService.user.role.roleId;
   }
 
-  ngOnInit() {}
+  getUser(email: string, event?: any) {
+    this.userService.getUserByEmail(email).subscribe((res: any) => {
+      this.user = res.object;
+      if (event) {
+        event.target.complete();
+      }
+    });
+  }
 
   async openChangePassword() {
     const alert = await this.alertController.create({
@@ -69,13 +75,13 @@ export class MyAccountPage implements OnInit {
 
   save() {
     this.loading = true;
-    this.userService.newUser(this.user).subscribe((res: any) => {
-      this.loading = false;
-    });
-  }
-
-  changeListener($event): void {
-    // this.file = $event.target.files[0];
-    console.log($event);
+    this.userService.updateUser(this.user).subscribe(
+      () => {
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
   }
 }

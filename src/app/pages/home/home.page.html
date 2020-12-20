@@ -1,12 +1,12 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="background-header">
-    <ion-buttons>
+    <ion-buttons slot="start">
       <ion-menu-button color="light" menu="firstMenu"> </ion-menu-button>
     </ion-buttons>
-    <ion-title class="text-white">Inicio</ion-title>
+    <ion-title class="ion-text-center text-white">Inicio</ion-title>
     <ion-buttons slot="end">
       <ion-avatar>
-        <img [src]="userService.user.image" alt="" />
+        <img [src]="userService.user.image | image" alt="" />
       </ion-avatar>
     </ion-buttons>
   </ion-toolbar>

@@ -1,24 +1,24 @@
 <ion-menu side="start" menuId="firstMenu" contentId="main">
   <ion-header>
     <ion-toolbar color="light">
-      <ion-title>Menú</ion-title>
+      <ion-title class="ion-text-center">Menú</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="background-header">
     <ion-grid style="height: 100%">
-      <ion-row style="height: 20%">
+      <ion-row style="height: 80%">
         <ion-col size="12">
-          <ion-list>
+          <ion-list class="ion-no-padding">
             <ion-menu-toggle *ngFor="let m of menus | async">
               <ion-item class="background-header text-white" [routerLink]="m.redirectTo">
-                <ion-icon slot="start" [name]="m.icon"></ion-icon>
+                <ion-icon slot="start" color="light" [name]="m.icon"></ion-icon>
                 <ion-label>{{ m.name }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
           </ion-list>
         </ion-col>
       </ion-row>
-      <ion-row class="ion-align-items-end" style="height: 80%">
+      <ion-row class="ion-align-items-end" style="height: 20%">
         <ion-col size="12">
           <ion-button color="danger" shape="round" expand="full" fill="solid" (click)="logout()">
             <ion-icon slot="start" name="log-out-outline"></ion-icon>

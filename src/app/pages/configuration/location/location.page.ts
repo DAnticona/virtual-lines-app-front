@@ -4,14 +4,6 @@ import { UserService } from '../../../services/user/user.service';
 
 declare var google: any;
 
-interface Marker {
-  position: {
-    lat: number;
-    lng: number;
-  };
-  title: string;
-}
-
 @Component({
   selector: 'app-location',
   templateUrl: './location.page.html',
@@ -35,6 +27,20 @@ export class LocationPage implements OnInit {
     this.loadMap();
   }
 
+  getStore(storeId: string, event?: any) {
+    this.storeService.getStoreById(storeId).subscribe((res: any) => {
+      this.store = res.object;
+      this.latitude = this.store.latitude;
+      this.longitude = this.store.longitude;
+
+      this.loadMap();
+
+      if (event) {
+        event.target.complete();
+      }
+    });
+  }
+
   loadMap() {
     const mapElement: HTMLElement = document.getElementById('map');
 
@@ -48,8 +54,7 @@ export class LocationPage implements OnInit {
     this.addMarker(initialLocation);
 
     google.maps.event.addListener(this.map, 'click', (event: any) => {
-      console.log(event.latLng.toJSON());
-
+      console.log(this.map);
       this.latitude = event.latLng.toJSON().lat;
       this.longitude = event.latLng.toJSON().lng;
 
@@ -78,12 +83,12 @@ export class LocationPage implements OnInit {
     this.store.latitude = this.latitude;
     this.store.longitude = this.longitude;
     this.storeService.updateStore(this.store).subscribe(
-      res => {
-        console.log(res);
+      () => {
         this.userService.user.store = this.store;
         this.loading = false;
       },
       err => {
+        console.log(err);
         this.loading = false;
       }
     );

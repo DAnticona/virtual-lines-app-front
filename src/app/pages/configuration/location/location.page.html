@@ -1,6 +1,17 @@
 <app-header title="General"></app-header>
+
 <ion-content class="background-image">
-  <ion-grid style="height: 100%">
+  <ion-refresher slot="fixed" (ionRefresh)="getStore(store.storeId, $event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle"
+      pullingText="Actualizar"
+      color="danger"
+      refreshingSpinner="lines"
+      refreshingText="Actualizando..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid class="ion-padding" style="height: 100%">
     <ion-row style="height: 90%">
       <ion-col size="12">
         <div id="map"></div>

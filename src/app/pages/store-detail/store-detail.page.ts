@@ -30,12 +30,8 @@ export class StoreDetailPage {
     public alertController: AlertController
   ) {
     this.activatedRoute.params.subscribe(params => {
-      const id = params.id;
-      this.storeService.getStoreById(id).subscribe((res: any) => {
-        this.store = res.object;
-        this.loadMap();
-        this.getSlotsActives(this.store.storeId);
-      });
+      const storeId = params.id;
+      this.getStore(storeId);
     });
   }
 
@@ -60,24 +56,36 @@ export class StoreDetailPage {
     this.markers.push(marker);
   }
 
-  getSlotsActives(lineId: string) {
-    this.lineService.getLinesByStoreId(lineId).subscribe((res: any) => {
-      const lines = res.object;
-      this.lines = [];
-      this.linesNumber = res.count;
-      lines.forEach(line => {
-        this.slotService
-          .getSlotActiveByLineIdUserId(line.lineId, this.userService.user.userId)
-          .subscribe((res1: any) => {
-            const isExists = !!res1.object;
-            if (isExists) {
-              line.isExists = true;
-            } else {
-              line.isExists = false;
-            }
-            this.lines.push(line);
-            this.lines.sort((a, b) => (a.name < b.name ? -1 : 1));
+  getStore(storeId: string, event?: any) {
+    this.storeService.getStoreById(storeId).subscribe((res: any) => {
+      this.store = res.object;
+      this.loadMap();
+      this.lineService.getLinesByStoreId(storeId).subscribe((res1: any) => {
+        const lines = res1.object;
+        this.lines = [];
+        this.linesNumber = res1.count;
+        if (this.linesNumber > 0) {
+          lines.forEach(line => {
+            this.slotService
+              .getSlotActiveByLineIdUserId(line.lineId, this.userService.user.userId)
+              .subscribe((res2: any) => {
+                const isExists = !!res2.object;
+                if (isExists) {
+                  line.isExists = true;
+                } else {
+                  line.isExists = false;
+                }
+                this.lines.push(line);
+                this.lines.sort((a, b) => (a.name < b.name ? -1 : 1));
+
+                if (event) {
+                  event.target.complete();
+                }
+              });
           });
+        } else if (event) {
+          event.target.complete();
+        }
       });
     });
   }
@@ -162,7 +170,7 @@ export class StoreDetailPage {
 
   save() {
     this.slotService.saveSlot(this.slot).subscribe((res: any) => {
-      this.getSlotsActives(this.store.storeId);
+      this.getStore(this.store.storeId);
     });
   }
 }

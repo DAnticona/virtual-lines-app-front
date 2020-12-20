@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { CONFIG_PATH } from '../../config/config';
 import { throwError } from 'rxjs';
 import { UserService } from '../user/user.service';
+import { AlertService } from '../alert/alert.service';
+import { HttpService } from '../http/http.service';
+import { CONFIG_PATH } from '../../config/config';
 
 @Injectable({
   providedIn: 'root',
@@ -13,76 +14,41 @@ export class StoresService {
   baseUrl = CONFIG_PATH;
 
   constructor(
-    public alertController: AlertController,
-    private toastController: ToastController,
-    private http: HttpClient,
-    private userService: UserService
+    private userService: UserService,
+    private alertService: AlertService,
+    private httpService: HttpService,
+    private http: HttpClient
   ) {}
-
-  async presentAlert(header: string, subHeader: string, message: string) {
-    const alert = await this.alertController.create({
-      header,
-      subHeader,
-      message,
-      buttons: ['OK'],
-    });
-
-    await alert.present();
-  }
-
-  async presentToast(message: string) {
-    const toast = await this.toastController.create({
-      color: 'success',
-      message,
-      duration: 2000,
-    });
-    toast.present();
-  }
 
   getStores() {
     const url = `${this.baseUrl}/store`;
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: `${this.userService.user.token}`,
-        'Content-Type': 'application/json',
-      }),
-    };
-
-    return this.http.get(url, httpOptions);
+    return this.http.get(url, this.httpService.getHttpOptions());
   }
 
   getStoreById(id: string) {
     const url = `${this.baseUrl}/store/${id}`;
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: `${this.userService.user.token}`,
-        'Content-Type': 'application/json',
-      }),
-    };
-
-    return this.http.get(url, httpOptions);
+    return this.http.get(url, this.httpService.getHttpOptions()).pipe(
+      map((res: any) => {
+        this.updateStorage(res.object);
+        return res;
+      })
+    );
   }
 
   updateStore(store: any) {
     const url = `${this.baseUrl}/store`;
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: `${this.userService.user.token}`,
-        'Content-Type': 'application/json',
-      }),
-    };
-
-    return this.http.post(url, store, httpOptions).pipe(
-      map(res => {
-        this.presentToast(`Datos actualizados`);
+    return this.http.post(url, store, this.httpService.getHttpOptions()).pipe(
+      map((res: any) => {
+        this.updateStorage(res.object);
+        this.alertService.presentToast(`Datos actualizados`, 'success');
         return true;
       }),
       catchError(err => {
         console.log(err);
-        this.presentAlert('Error', store.publicName, err.error.message);
+        this.alertService.presentAlert('Error', store.publicName, err.error.message);
         return throwError(err);
       })
     );
@@ -93,14 +59,19 @@ export class StoresService {
 
     return this.http.post(url, store).pipe(
       map(res => {
-        this.presentAlert('Muy Bien', store.publicName, 'Registro exitoso');
+        this.alertService.presentToast('Registro exitoso', 'success');
         return true;
       }),
       catchError(err => {
         console.log(err);
-        this.presentAlert('Error', store.publicName, err.error.message);
+        this.alertService.presentAlert('Error', store.publicName, err.error.message);
         return throwError(err);
       })
     );
+  }
+
+  private updateStorage(store: any) {
+    this.userService.user.store = store;
+    this.userService.saveStorage(this.userService.user, this.userService.token);
   }
 }

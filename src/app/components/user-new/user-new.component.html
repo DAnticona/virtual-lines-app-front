@@ -78,7 +78,7 @@
       </ion-row>
       <ion-row class="ion-padding ion-justify-content-center">
         <ion-col size="6">
-          <ion-button (click)="dismiss()" color="dark" [disabled]="loading" type="button" expand="block">
+          <ion-button (click)="dismiss()" color="danger" [disabled]="loading" type="button" expand="block">
             <ion-icon *ngIf="!loading" slot="start" name="arrow-back-outline"></ion-icon>
             <ion-spinner *ngIf="loading" slot="start" name="dots"></ion-spinner>
             Volver
