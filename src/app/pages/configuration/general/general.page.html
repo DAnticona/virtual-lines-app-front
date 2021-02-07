@@ -1,54 +1,100 @@
 <app-header title="General"></app-header>
 
 <ion-content class="background-image">
-  <ion-refresher slot="fixed" (ionRefresh)="getStore(store.storeId, $event)">
-    <ion-refresher-content
-      pullingIcon="chevron-down-circle"
-      pullingText="Actualizar"
-      color="danger"
-      refreshingSpinner="lines"
-      refreshingText="Actualizando..."
-    >
-    </ion-refresher-content>
-  </ion-refresher>
-  <form style="height: 100%" [formGroup]="form" (submit)="save()">
-    <ion-grid style="height: 100%">
-      <ion-row style="height: 90%">
-        <ion-col size="12">
-          <ion-list class="ion-no-padding">
-            <ion-item>
-              <ion-label *ngIf="true" position="floating">Nombre del establecimiento</ion-label>
-              <ion-input type="text" name="publicName" formControlName="publicName"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Página web</ion-label>
-              <ion-input type="text" name="website" formControlName="website"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Teléfono</ion-label>
-              <ion-input type="text" name="phone" formControlName="phone"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Descripción</ion-label>
-              <ion-textarea
-                placeholder="Ingrese una breve descripción..."
-                name="description"
-                rows="10"
-                formControlName="description"
-              ></ion-textarea>
-            </ion-item>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-      <ion-row style="height: 10%">
-        <ion-col size="12">
-          <ion-button [disabled]="loading" color="tertiary" type="submit" expand="block">
-            <ion-icon class="ion-padding" *ngIf="!loading" name="save-outline"></ion-icon>
-            <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
-            Actualizar
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
+	<ion-refresher slot="fixed" (ionRefresh)="getData(store.storeId, $event)">
+		<ion-refresher-content> </ion-refresher-content>
+	</ion-refresher>
+	<form [formGroup]="form" (submit)="save()">
+		<ion-card>
+			<div class="global-container">
+				<div class="image-container">
+					<div class="container1">
+						<ion-img
+							*ngIf="!userService.user.store.image"
+							[src]="userService.user.store.image | image: 'store'"
+						></ion-img>
+						<div
+							*ngIf="userService.user.store.image"
+							class="image"
+							[ngStyle]="{'background-image': imageStore}"
+						></div>
+						<ion-button
+							type="button"
+							class="image-button"
+							(click)="presentActionSheet(1)"
+							size="small"
+							shape="round"
+							color="light"
+						>
+							<ion-icon slot="icon-only" name="camera" color="dark"></ion-icon>
+						</ion-button>
+					</div>
+				</div>
+				<div class="avatar-container">
+					<div class="container2">
+						<img
+							*ngIf="!userService.user.store.avatar"
+							class="avatar img-circle"
+							[src]="userService.user.store.avatar | image: 'store'"
+						/>
+						<div
+							*ngIf="userService.user.store.avatar"
+							class="avatar"
+							[ngStyle]="{'background-image': avatarStore}"
+						></div>
+						<ion-button
+							type="button"
+							class="image-button"
+							(click)="presentActionSheet(0)"
+							size="small"
+							shape="round"
+							color="light"
+						>
+							<ion-icon slot="icon-only" name="camera" color="dark"></ion-icon>
+						</ion-button>
+					</div>
+				</div>
+			</div>
+
+			<ion-list class="ion-no-padding">
+				<ion-item>
+					<ion-label *ngIf="true" position="floating">Nombre del establecimiento</ion-label>
+					<ion-input type="text" inputmode="text" name="publicName" formControlName="publicName"></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-label>Categoría</ion-label>
+					<ion-select placeholder="Seleccione" name="categoryId" formControlName="categoryId">
+						<ion-select-option [value]="category.categoryId" *ngFor="let category of categories">
+							{{category.name}}
+						</ion-select-option>
+					</ion-select>
+				</ion-item>
+				<ion-item>
+					<ion-label position="floating">Página web</ion-label>
+					<ion-input type="url" inputmode="url" name="website" formControlName="website"></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-label position="floating">Teléfono</ion-label>
+					<ion-input type="tel" inputmode="tel" name="phone" formControlName="phone"></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-label position="floating">Breve descripción</ion-label>
+					<ion-textarea
+						placeholder="Ingrese una breve descripción..."
+						name="description"
+						rows="3"
+						formControlName="description"
+					></ion-textarea>
+				</ion-item>
+			</ion-list>
+
+			<ion-card-content>
+				<ion-button [disabled]="loading" color="tertiary" type="submit" expand="block">
+					<ion-icon slot="start" *ngIf="!loading" name="save-outline"></ion-icon>
+					<ion-spinner slot="start" *ngIf="loading" name="dots"></ion-spinner>
+					Actualizar
+				</ion-button>
+			</ion-card-content>
+		</ion-card>
+	</form>
 </ion-content>

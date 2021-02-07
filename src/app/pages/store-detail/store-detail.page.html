@@ -1,56 +1,20 @@
 <app-header [title]="store.publicName"></app-header>
 
-<ion-content class="background-image">
-  <ion-refresher slot="fixed" (ionRefresh)="getStore(store.storeId, $event)">
-    <ion-refresher-content
-      pullingIcon="chevron-down-circle"
-      pullingText="Actualizar"
-      color="danger"
-      refreshingSpinner="lines"
-      refreshingText="Actualizando..."
-    >
-    </ion-refresher-content>
-  </ion-refresher>
-  <ion-card>
-    <ion-img [src]="store.image | image: 'store'"></ion-img>
-    <ion-card-header>
-      <ion-card-subtitle>
-        <ion-label>
-          <ion-icon slot="start" name="call"></ion-icon>
-          {{store.phone}}
-        </ion-label>
-      </ion-card-subtitle>
-      <ion-card-title>{{store.publicName}}</ion-card-title>
-    </ion-card-header>
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="information-tab">
+      <ion-icon name="information-circle"></ion-icon>
+      <ion-label>Información</ion-label>
+    </ion-tab-button>
 
-    <ion-card-content> {{store.description}} </ion-card-content>
-  </ion-card>
+    <ion-tab-button tab="lines-tab">
+      <ion-icon name="people"></ion-icon>
+      <ion-label>Filas</ion-label>
+    </ion-tab-button>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        Filas
-        <ion-badge color="primary" mode="ios">{{linesNumber}}</ion-badge>
-      </ion-card-title>
-    </ion-card-header>
-    <ion-item (click)="inOut(line)" *ngFor="let line of lines">
-      <ion-icon slot="start" name="people"></ion-icon>
-      <ion-label [color]="line.isExists ? 'danger' : 'success'">{{line.name}}</ion-label>
-      <ion-icon
-        slot="end"
-        [color]="line.isExists ? 'danger' : 'success'"
-        [name]="line.isExists ? 'remove-circle' : 'add-circle'"
-      ></ion-icon>
-    </ion-item>
-  </ion-card>
-
-  <ion-card>
-    <ion-grid style="height: 100%">
-      <ion-row style="height: 100%">
-        <ion-col size="12">
-          <div id="map"></div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
-</ion-content>
+    <ion-tab-button tab="bookings-tab">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>Reservas</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

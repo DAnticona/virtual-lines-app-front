@@ -1,198 +1,185 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar class="background-header">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/login"></ion-back-button>
-    </ion-buttons>
-    <ion-title class="text-white">Nuevo Establecimiento</ion-title>
-  </ion-toolbar>
+	<ion-toolbar class="background-header">
+		<ion-buttons slot="start">
+			<ion-back-button color="light" defaultHref="/login"></ion-back-button>
+		</ion-buttons>
+		<ion-title class="text-white">Nuevo Establecimiento</ion-title>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content class="vertical-center ion-padding background-image">
-  <form [formGroup]="form" (ngSubmit)="save()">
-    <ion-grid>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="1">
-          <ion-img class="ion-text-center" class="img-75" src="../../assets/gif/slide.gif"></ion-img>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+	<form [formGroup]="form" (ngSubmit)="save()">
+		<ion-grid>
+			<ion-row class="ion-justify-content-center">
+				<ion-col size="1">
+					<ion-img class="ion-text-center" class="img-75" src="../../assets/gif/slide.gif"></ion-img>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
 
-    <ion-slides class="bg-white ion-padding">
-      <ion-slide>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <h5>Datos del Establecimiento</h5>
-              <small>1 de 3</small>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-list>
-                <ion-item>
-                  <ion-label position="floating">Nombre del establecimiento</ion-label>
-                  <ion-input type="text" name="publicName" formControlName="publicName"></ion-input>
-                </ion-item>
-                <ion-list *ngIf="publicName.invalid && publicName.touched" lines="none">
-                  <ion-item>
-                    <ion-text color="danger">
-                      <small>Ingrese el nombre del establecimiento</small>
-                    </ion-text>
-                  </ion-item>
-                </ion-list>
-                <ion-item>
-                  <ion-label position="floating">Página web</ion-label>
-                  <ion-input type="text" name="website" formControlName="website"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-label position="floating">Teléfono</ion-label>
-                  <ion-input type="text" name="phone" formControlName="phone"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-label position="floating">Descripción</ion-label>
-                  <ion-textarea
-                    placeholder="Ingrese una breve descripción..."
-                    name="description"
-                    formControlName="description"
-                  ></ion-textarea>
-                </ion-item>
-                <ion-list *ngIf="description.invalid && description.touched" lines="none">
-                  <ion-item>
-                    <ion-text color="danger">
-                      <small>Ingrese una descripción</small>
-                    </ion-text>
-                  </ion-item>
-                </ion-list>
-                <ion-item>
-                  <ion-label>Categoría</ion-label>
-                  <ion-select
-                    #category
-                    placeholder="Seleccione"
-                    (ionChange)="selectCategory(category.value)"
-                    name="categoryId"
-                    formControlName="categoryId"
-                  >
-                    <ion-select-option [value]="category.categoryId" *ngFor="let category of categories">
-                      {{category.name}}
-                    </ion-select-option>
-                  </ion-select>
-                </ion-item>
-                <ion-list *ngIf="categoryId.invalid && categoryId.touched" lines="none">
-                  <ion-item>
-                    <ion-text color="danger">
-                      <small>Seleccione una categoría</small>
-                    </ion-text>
-                  </ion-item>
-                </ion-list>
-                <ion-item>
-                  <ion-label>Sub Categoría</ion-label>
-                  <ion-select placeholder="Seleccione" name="subcategoryId" formControlName="subcategoryId">
-                    <ion-select-option
-                      [value]="subcategory.subcategoryId"
-                      *ngFor="let subcategory of subcategories"
-                    >
-                      {{subcategory.name}}
-                    </ion-select-option>
-                  </ion-select>
-                </ion-item>
-                <ion-list *ngIf="subcategoryId.invalid && subcategoryId.touched" lines="none">
-                  <ion-item>
-                    <ion-text color="danger">
-                      <small>Seleccione una Sub Categoría</small>
-                    </ion-text>
-                  </ion-item>
-                </ion-list>
-              </ion-list>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-slide>
+		<ion-slides class="bg-white ion-padding">
+			<ion-slide>
+				<ion-grid>
+					<ion-row>
+						<ion-col size="12">
+							<h5>Datos del Establecimiento</h5>
+							<small>1 de 3</small>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col size="12">
+							<ion-list>
+								<ion-item>
+									<ion-label position="floating">Nombre del establecimiento</ion-label>
+									<ion-input
+										type="text"
+										inputmode="text"
+										name="publicName"
+										formControlName="publicName"
+									></ion-input>
+								</ion-item>
+								<ion-list *ngIf="publicName.invalid && publicName.touched" lines="none">
+									<ion-item>
+										<ion-text color="danger">
+											<small>Ingrese el nombre del establecimiento</small>
+										</ion-text>
+									</ion-item>
+								</ion-list>
+								<ion-item>
+									<ion-label position="floating">Página web</ion-label>
+									<ion-input type="url" inputmode="url" name="website" formControlName="website"></ion-input>
+								</ion-item>
+								<ion-item>
+									<ion-label position="floating">Teléfono</ion-label>
+									<ion-input type="tel" inputmode="tel" name="phone" formControlName="phone"></ion-input>
+								</ion-item>
+								<ion-item>
+									<ion-label position="floating">Descripción</ion-label>
+									<ion-textarea
+										placeholder="Ingrese una breve descripción..."
+										inputmode="text"
+										name="description"
+										formControlName="description"
+									></ion-textarea>
+								</ion-item>
+								<ion-list *ngIf="description.invalid && description.touched" lines="none">
+									<ion-item>
+										<ion-text color="danger">
+											<small>Ingrese una descripción</small>
+										</ion-text>
+									</ion-item>
+								</ion-list>
+								<ion-item>
+									<ion-label>Categoría</ion-label>
+									<ion-select
+										#category
+										placeholder="Seleccione"
+										name="categoryId"
+										formControlName="categoryId"
+									>
+										<ion-select-option [value]="category.categoryId" *ngFor="let category of categories">
+											{{category.name}}
+										</ion-select-option>
+									</ion-select>
+								</ion-item>
+								<ion-list *ngIf="categoryId.invalid && categoryId.touched" lines="none">
+									<ion-item>
+										<ion-text color="danger">
+											<small>Seleccione una categoría</small>
+										</ion-text>
+									</ion-item>
+								</ion-list>
+							</ion-list>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-slide>
 
-      <ion-slide>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <h5>Datos del establecimiento</h5>
-              <small>2 de 3</small>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <div id="map"></div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-slide>
+			<ion-slide>
+				<ion-grid>
+					<ion-row>
+						<ion-col size="12">
+							<h5>Datos del establecimiento</h5>
+							<small>2 de 3</small>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col size="12">
+							<div id="map"></div>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-slide>
 
-      <ion-slide>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <h5>Datos del Usuario</h5>
-              <small>3 de 3</small>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-list>
-                <ion-item [disabled]="loading">
-                  <ion-label position="floating">Nombre del usuario</ion-label>
-                  <ion-input type="text" name="name" formControlName="name"></ion-input>
-                </ion-item>
-                <ion-list *ngIf="name.invalid && name.touched" lines="none">
-                  <ion-item>
-                    <ion-text color="danger">
-                      <small>Ingrese un nombre del usuario</small>
-                    </ion-text>
-                  </ion-item>
-                </ion-list>
-                <ion-item [disabled]="loading">
-                  <ion-label position="floating">Email</ion-label>
-                  <ion-input type="email" name="email" formControlName="email"></ion-input>
-                </ion-item>
-                <ion-list *ngIf="email.invalid && email.touched" lines="none">
-                  <ion-item>
-                    <ion-text color="danger">
-                      <small>Ingrese un email válido</small>
-                    </ion-text>
-                  </ion-item>
-                </ion-list>
-                <ion-item [disabled]="loading">
-                  <ion-label position="floating">Contraseña</ion-label>
-                  <ion-input type="password" name="password1" formControlName="password1"></ion-input>
-                </ion-item>
-                <ion-list *ngIf="password1.invalid && password1.touched" lines="none">
-                  <ion-item>
-                    <ion-text color="danger">
-                      <small>Ingrese una contraseña</small>
-                    </ion-text>
-                  </ion-item>
-                </ion-list>
-                <ion-item [disabled]="loading">
-                  <ion-label position="floating">Repetir Contraseña</ion-label>
-                  <ion-input type="password" name="password2" formControlName="password2"></ion-input>
-                </ion-item>
-                <ion-list *ngIf="password2.invalid && password2.touched" lines="none">
-                  <ion-item>
-                    <ion-text color="danger">
-                      <small>Las contraseñas no coinciden</small>
-                    </ion-text>
-                  </ion-item>
-                </ion-list>
-              </ion-list>
-            </ion-col>
-          </ion-row>
-          <ion-row class="ion-padding">
-            <ion-col size="12">
-              <ion-button [disabled]="loading" type="submit" expand="block">
-                <ion-icon class="ion-padding" *ngIf="!loading" name="save-outline"></ion-icon>
-                <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
-                Registrarse
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-slide>
-    </ion-slides>
-  </form>
+			<ion-slide>
+				<ion-grid>
+					<ion-row>
+						<ion-col size="12">
+							<h5>Datos del Usuario</h5>
+							<small>3 de 3</small>
+						</ion-col>
+					</ion-row>
+					<ion-row>
+						<ion-col size="12">
+							<ion-list>
+								<ion-item [disabled]="loading">
+									<ion-label position="floating">Nombre del usuario</ion-label>
+									<ion-input type="text" inputmode="text" name="name" formControlName="name"></ion-input>
+								</ion-item>
+								<ion-list *ngIf="name.invalid && name.touched" lines="none">
+									<ion-item>
+										<ion-text color="danger">
+											<small>Ingrese un nombre del usuario</small>
+										</ion-text>
+									</ion-item>
+								</ion-list>
+								<ion-item [disabled]="loading">
+									<ion-label position="floating">Email</ion-label>
+									<ion-input type="email" inputmode="email" name="email" formControlName="email"></ion-input>
+								</ion-item>
+								<ion-list *ngIf="email.invalid && email.touched" lines="none">
+									<ion-item>
+										<ion-text color="danger">
+											<small>Ingrese un email válido</small>
+										</ion-text>
+									</ion-item>
+								</ion-list>
+								<ion-item [disabled]="loading">
+									<ion-label position="floating">Contraseña</ion-label>
+									<ion-input type="password" name="password1" formControlName="password1"></ion-input>
+								</ion-item>
+								<ion-list *ngIf="password1.invalid && password1.touched" lines="none">
+									<ion-item>
+										<ion-text color="danger">
+											<small>Ingrese una contraseña</small>
+										</ion-text>
+									</ion-item>
+								</ion-list>
+								<ion-item [disabled]="loading">
+									<ion-label position="floating">Repetir Contraseña</ion-label>
+									<ion-input type="password" name="password2" formControlName="password2"></ion-input>
+								</ion-item>
+								<ion-list *ngIf="password2.invalid && password2.touched" lines="none">
+									<ion-item>
+										<ion-text color="danger">
+											<small>Las contraseñas no coinciden</small>
+										</ion-text>
+									</ion-item>
+								</ion-list>
+							</ion-list>
+						</ion-col>
+					</ion-row>
+					<ion-row class="ion-padding">
+						<ion-col size="12">
+							<ion-button [disabled]="loading" type="submit" expand="block">
+								<ion-icon class="ion-padding" *ngIf="!loading" name="save-outline"></ion-icon>
+								<ion-spinner *ngIf="loading" name="dots"></ion-spinner>
+								Registrarse
+							</ion-button>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-slide>
+		</ion-slides>
+	</form>
 </ion-content>

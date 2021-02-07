@@ -5,10 +5,11 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { UserNewComponent } from './user-new/user-new.component';
+import { ScheduleComponent } from './schedule/schedule.component';
 
 @NgModule({
-  declarations: [UserNewComponent, UserEditComponent],
+  declarations: [UserNewComponent, UserEditComponent, ScheduleComponent],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, RouterModule],
-  exports: [UserNewComponent, UserEditComponent],
+  exports: [UserNewComponent, UserEditComponent, ScheduleComponent],
 })
 export class ComponentsModule {}

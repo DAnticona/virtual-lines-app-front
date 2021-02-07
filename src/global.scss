@@ -27,63 +27,71 @@
 
 // Personalizados
 .background-image {
-  --background: linear-gradient(rgba(80, 40, 40, 0.5), rgba(80, 40, 40, 0.5)),
-    url(assets/image/logo/background_login.jpg) no-repeat center center / cover;
+	--background: linear-gradient(rgba(80, 40, 40, 0.5), rgba(80, 40, 40, 0.5)),
+		url(assets/image/logo/background_login.jpg) no-repeat center center / cover;
 }
 
 .background-header {
-  --background: #5a162e;
-  background-color: #5a162e;
+	--background: #5a162e;
+	background-color: #5a162e;
 }
 
 .background-secondary {
-  --background: #b87c91;
+	--background: #b87c91;
 }
 
 .background-menu {
-  --background: #d8c9c9;
+	--background: #d8c9c9;
 }
 
 .text-white {
-  color: #ffffff;
+	color: #ffffff;
+}
+
+.text-black {
+	color: #000000;
 }
 
 .text-gray {
-  color: #ffffffb2;
+	color: #ffffffb2;
+}
+
+.text-dark {
+	color: #494646b2;
 }
 
 .icon-64 {
-  font-size: 64px;
+	font-size: 64px;
 }
 
 .img-circle {
-  border-radius: 100%;
+	border-radius: 50%;
 }
 
 .img-300 {
-  width: 300px;
+	width: 300px;
 }
 
 .img-200 {
-  width: 200px;
+	width: 200px;
 }
 
 .img-100 {
-  width: 100px;
+	width: 100px;
 }
 
 .img-75 {
-  width: 75px;
+	width: 75px;
 }
 
 .img-50 {
-  width: 50px;
+	width: 50px;
 }
 
 .bg-white {
-  background-color: #ffffff;
+	--background: #ffffff;
 }
 
 .grid {
-  background-color: aqua;
+	background-color: aqua;
 }

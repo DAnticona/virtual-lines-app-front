@@ -11,11 +11,22 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PagesModule } from './pages/pages.module';
 
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule, PagesModule, IonicModule.forRoot(), HttpClientModule, AppRoutingModule],
-  providers: [StatusBar, SplashScreen, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-  bootstrap: [AppComponent],
+	declarations: [AppComponent],
+	entryComponents: [],
+	imports: [BrowserModule, PagesModule, IonicModule.forRoot(), HttpClientModule, AppRoutingModule],
+	providers: [
+		StatusBar,
+		SplashScreen,
+		Geolocation,
+		Camera,
+		FileTransfer,
+		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+	],
+	bootstrap: [AppComponent],
 })
 export class AppModule {}

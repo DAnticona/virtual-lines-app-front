@@ -5,7 +5,8 @@
     "redirectTo": "/pages/stores",
     "description": "Lista de Establecimientos",
     "client": true,
-    "store": false
+    "store": false,
+    "roles": [{ "roleId": 3 }]
   },
   {
     "icon": "people-outline",
@@ -13,7 +14,17 @@
     "redirectTo": "/pages/lines",
     "description": "Gestionar filas de atención",
     "client": false,
-    "store": true
+    "store": true,
+    "roles": [{ "roleId": 1 }, { "roleId": 2 }]
+  },
+  {
+    "icon": "calendar-outline",
+    "name": "Agenda para reservas",
+    "redirectTo": "/pages/schedules",
+    "description": "Gestionar reservas de citas",
+    "client": false,
+    "store": true,
+    "roles": [{ "roleId": 1 }, { "roleId": 2 }]
   },
   {
     "icon": "cog-outline",
@@ -21,7 +32,8 @@
     "redirectTo": "/pages/configuration",
     "description": "Configuración de la tienda",
     "client": false,
-    "store": true
+    "store": true,
+    "roles": [{ "roleId": 1 }]
   },
   {
     "icon": "person-circle-outline",
@@ -29,6 +41,7 @@
     "redirectTo": "/pages/my-account",
     "description": "Ajustes de mi cuenta",
     "client": true,
-    "store": true
+    "store": true,
+    "roles": [{ "roleId": 1 }, { "roleId": 2 }, { "roleId": 3 }]
   }
 ]

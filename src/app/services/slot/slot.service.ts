@@ -4,45 +4,51 @@ import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { AlertService } from '../alert/alert.service';
 import { HttpService } from '../http/http.service';
-import { CONFIG_PATH } from '../../config/config';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class SlotService {
-  baseUrl = CONFIG_PATH;
+	baseUrl = environment.url;
 
-  constructor(
-    private alertService: AlertService,
-    private httpService: HttpService,
-    private http: HttpClient
-  ) {}
+	constructor(
+		private alertService: AlertService,
+		private httpService: HttpService,
+		private http: HttpClient
+	) {}
 
-  getSlotsActivesByLineId(id: string) {
-    const url = `${this.baseUrl}/slot/line/${id}`;
+	getSlotsActivesByLineId(id: string) {
+		const url = `${this.baseUrl}/slot/line/${id}`;
 
-    return this.http.get(url, this.httpService.getHttpOptions());
-  }
+		return this.http.get(url, this.httpService.getHttpOptions());
+	}
 
-  getSlotActiveByLineIdUserId(lineId: string, userId: string) {
-    const url = `${this.baseUrl}/slot/line/${lineId}/user/${userId}`;
+	getSlotActiveByLineIdUserId(lineId: string, userId: string) {
+		const url = `${this.baseUrl}/slot/line/${lineId}/user/${userId}`;
 
-    return this.http.get(url, this.httpService.getHttpOptions());
-  }
+		return this.http.get(url, this.httpService.getHttpOptions());
+	}
 
-  saveSlot(slot: any) {
-    const url = `${this.baseUrl}/slot`;
+	saveSlot(slot: any) {
+		const url = `${this.baseUrl}/slot`;
 
-    return this.http.post(url, slot, this.httpService.getHttpOptions()).pipe(
-      map(() => {
-        this.alertService.presentToast(`Datos actualizados`, 'success');
-        return true;
-      }),
-      catchError(err => {
-        console.log(err);
-        this.alertService.presentAlert('Error', 'slot.user.name', err.error.message);
-        return throwError(err);
-      })
-    );
-  }
+		return this.http.post(url, slot, this.httpService.getHttpOptions()).pipe(
+			map(() => {
+				this.alertService.presentToast(`Datos actualizados`, 'success');
+				return true;
+			}),
+			catchError(err => {
+				console.log(err);
+				// const message = `${err.error.message}
+				// <br />
+				// <br />
+				// ${err.error.detailMessage || ''}`;
+
+				// this.alertService.presentAlert('Ups!', 'Error', message);
+				this.alertService.presentAlertError(err.error);
+				return throwError(err);
+			})
+		);
+	}
 }

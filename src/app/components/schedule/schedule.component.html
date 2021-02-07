@@ -1,0 +1,128 @@
+<ion-header class="ion-no-border">
+	<ion-toolbar class="background-header">
+		<ion-title class="text-white">Nuevas Reservas</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding background-image">
+	<form [formGroup]="form" (ngSubmit)="save()">
+		<ion-grid>
+			<ion-row class="ion-justify-content-evenly">
+				<ion-col size="12">
+					<ion-list class="ion-no-padding">
+						<ion-item>
+							<ion-label color="medium">Nombre</ion-label>
+							<ion-input type="text" name="name" formControlName="name"></ion-input>
+						</ion-item>
+						<ion-item [disabled]="loading">
+							<ion-label *ngIf="!haveEndDate" color="medium">Fecha</ion-label>
+							<ion-label *ngIf="haveEndDate" color="medium">Desde</ion-label>
+							<ion-datetime
+								displayFormat="DD-MM-YYYY"
+								[value]="today | date: 'yyyy-MM-dd'"
+								[min]="today | date: 'yyyy-MM-dd'"
+								max="2100-12-31"
+								placeholder="Seleccione"
+								formControlName="startDate"
+								(ionChange)="changeStartDate()"
+							></ion-datetime>
+						</ion-item>
+						<ion-item [disabled]="loading">
+							<ion-label color="medium">Repetir</ion-label>
+							<ion-checkbox (ionChange)="toggleEndDate()" slot="end"></ion-checkbox>
+						</ion-item>
+						<ion-item *ngIf="haveEndDate" [disabled]="loading">
+							<ion-label color="medium">Hasta</ion-label>
+							<ion-datetime
+								displayFormat="DD-MM-YYYY"
+								[value]="startDate.value | date: 'yyyy-MM-dd'"
+								[min]="startDate.value | date: 'yyyy-MM-dd'"
+								max="2100-12-31"
+								placeholder="Seleccione"
+								formControlName="endDate"
+							></ion-datetime>
+						</ion-item>
+						<ion-item [disabled]="loading">
+							<ion-label color="medium">Hora de inicio</ion-label>
+							<ion-datetime
+								displayFormat="HH:mm"
+								[value]="today | date: 'HH:mm'"
+								placeholder="Seleccione"
+								formControlName="start"
+							></ion-datetime>
+						</ion-item>
+						<ion-item [disabled]="loading">
+							<ion-label color="medium">Hora de término</ion-label>
+							<ion-datetime
+								displayFormat="HH:mm"
+								[value]="today | date: 'HH:mm'"
+								placeholder="Seleccione"
+								formControlName="end"
+							></ion-datetime>
+						</ion-item>
+						<ion-item [disabled]="loading">
+							<ion-label color="medium">¿Tiene capacidad máxima?</ion-label>
+							<ion-checkbox
+								slot="end"
+								(ionChange)="toggleCapacity()"
+								formControlName="capacityFg"
+							></ion-checkbox>
+						</ion-item>
+						<ion-item *ngIf="haveCapacity" [disabled]="loading">
+							<ion-input
+								inputmode="numeric"
+								type="number"
+								step="1"
+								min="0"
+								placeholder="Ingrese aquí la capacidad máxima"
+								formControlName="capacity"
+							></ion-input>
+						</ion-item>
+						<ion-item [disabled]="loading">
+							<ion-label color="medium">¿Múltiples reservas por cliente?</ion-label>
+							<ion-checkbox
+								slot="end"
+								formControlName="multipleFg"
+								(ionChange)="toggleMultipleFg()"
+							></ion-checkbox>
+						</ion-item>
+						<ion-item *ngIf="haveMultipleFg" [disabled]="loading">
+							<ion-label color="medium">¿Limitar reservas por cliente?</ion-label>
+							<ion-checkbox
+								slot="end"
+								(ionChange)="toggleMaxPerClient()"
+								formControlName="maxPerClientFg"
+							></ion-checkbox>
+						</ion-item>
+						<ion-item *ngIf="haveMaxPerClient" [disabled]="loading">
+							<ion-input
+								inputmode="numeric"
+								type="number"
+								step="1"
+								min="0"
+								placeholder="Número maximo de reservas por usuario"
+								formControlName="maxPerClient"
+							></ion-input>
+						</ion-item>
+					</ion-list>
+				</ion-col>
+			</ion-row>
+			<ion-row class="ion-padding ion-justify-content-center">
+				<ion-col size="6">
+					<ion-button (click)="dismiss()" color="danger" [disabled]="loading" type="button" expand="block">
+						<ion-icon *ngIf="!loading" slot="start" name="arrow-back-outline"></ion-icon>
+						<ion-spinner *ngIf="loading" slot="start" name="dots"></ion-spinner>
+						Volver
+					</ion-button>
+				</ion-col>
+				<ion-col size="6">
+					<ion-button color="tertiary" [disabled]="loading" type="submit" expand="block">
+						<ion-icon *ngIf="!loading" slot="start" name="save-outline"></ion-icon>
+						<ion-spinner *ngIf="loading" slot="start" name="dots"></ion-spinner>
+						Guardar
+					</ion-button>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</form>
+</ion-content>

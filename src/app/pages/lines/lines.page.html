@@ -1,68 +1,63 @@
 <app-header title="Gestión de Filas"></app-header>
 
 <ion-content class="background-image">
-  <ion-refresher slot="fixed" (ionRefresh)="getLines($event)">
-    <ion-refresher-content
-      pullingIcon="chevron-down-circle"
-      pullingText="Actualizar"
-      color="danger"
-      refreshingSpinner="lines"
-      refreshingText="Actualizando..."
-    >
-    </ion-refresher-content>
-  </ion-refresher>
-  <ion-grid *ngIf="lines" style="height: 100%">
-    <ion-row style="height: 80%">
-      <ion-col size="12">
-        <ion-list class="ion-no-padding" #lista>
-          <ion-item-sliding *ngFor="let line of lines">
-            <ion-item detail button [routerLink]="['/pages/line-detail', line.lineId]">
-              <ion-label>
-                <h3>{{line.name}}</h3>
-              </ion-label>
-              <ion-label slot="end" class="ion-text-right">
-                <ion-badge color="primary">{{line.slotsNumber}}</ion-badge>
-              </ion-label>
-            </ion-item>
-            <ion-item-options side="end">
-              <ion-item-option color="danger" (click)="delete(line)">
-                <ion-icon slot="icon-only" name="trash"></ion-icon>
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-align-items-end" style="height: 20%">
-      <ion-col size="12">
-        <ion-button color="tertiary" shape="round" expand="full" fill="solid" (click)="newLine()">
-          <ion-icon slot="start" name="add-circle-outline"></ion-icon>
-          Nueva fila
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+	<ion-refresher slot="fixed" (ionRefresh)="getLines($event)">
+		<ion-refresher-content> </ion-refresher-content>
+	</ion-refresher>
+	<ion-card *ngIf="lines">
+		<ion-card-header>
+			<ion-card-title>Filas disponibles</ion-card-title>
+			<ion-card-subtitle>Tienes {{count}} filas disponibles</ion-card-subtitle>
+		</ion-card-header>
+		<ion-list class="ion-no-padding" #lista>
+			<ion-item-sliding *ngFor="let line of lines">
+				<ion-item
+					class="bg-white text-black"
+					detail
+					button
+					[routerLink]="['/pages/line-detail', line.lineId]"
+				>
+					<ion-label>
+						<h3>{{line.name}}</h3>
+						<p>{{line.slotsNumber}} clientes esperando</p>
+					</ion-label>
+					<ion-badge slot="end" color="primary">{{line.slotsNumber}}</ion-badge>
+				</ion-item>
+				<ion-item-options side="end">
+					<ion-item-option color="danger" (click)="delete(line)">
+						<ion-icon slot="icon-only" name="trash"></ion-icon>
+					</ion-item-option>
+				</ion-item-options>
+			</ion-item-sliding>
+		</ion-list>
+	</ion-card>
 
-  <div *ngIf="!lines">
-    <ion-list>
-      <ion-list-header>
-        <ion-label>
-          <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
-        </ion-label>
-      </ion-list-header>
-      <ion-item *ngFor="let skeleton of skeletons">
-        <ion-avatar slot="start">
-          <ion-skeleton-text animated></ion-skeleton-text>
-        </ion-avatar>
-        <ion-label>
-          <h3>
-            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-          </h3>
-          <p>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-          </p>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
+	<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+		<ion-fab-button color="tertiary" (click)="newLine()">
+			<ion-icon name="add"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
+
+	<div *ngIf="!lines">
+		<ion-list>
+			<ion-list-header>
+				<ion-label>
+					<ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+				</ion-label>
+			</ion-list-header>
+			<ion-item *ngFor="let skeleton of skeletons">
+				<ion-avatar slot="start">
+					<ion-skeleton-text animated></ion-skeleton-text>
+				</ion-avatar>
+				<ion-label>
+					<h3>
+						<ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+					</h3>
+					<p>
+						<ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+					</p>
+				</ion-label>
+			</ion-item>
+		</ion-list>
+	</div>
 </ion-content>

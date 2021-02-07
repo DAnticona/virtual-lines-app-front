@@ -2,23 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { HttpService } from '../http/http.service';
-import { CONFIG_PATH } from '../../config/config';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class RoleService {
-  baseUrl = CONFIG_PATH;
+	baseUrl = environment.url;
 
-  constructor(private httpService: HttpService, private http: HttpClient) {}
+	constructor(private httpService: HttpService, private http: HttpClient) {}
 
-  getRolesStore() {
-    const url = `${this.baseUrl}/role/store`;
+	getRolesStore() {
+		const url = `${this.baseUrl}/role/store`;
 
-    return this.http.get(url, this.httpService.getHttpOptions()).pipe(
-      map((res: any) => {
-        return res.object;
-      })
-    );
-  }
+		return this.http.get(url, this.httpService.getHttpOptions()).pipe(
+			map((res: any) => {
+				return res.object;
+			})
+		);
+	}
 }

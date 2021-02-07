@@ -2,23 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class HttpService {
-  token: string;
+	token: string;
 
-  constructor() {
-    this.token = localStorage.getItem('token') ? localStorage.getItem('token') : null;
-  }
+	constructor() {}
 
-  getHttpOptions() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: `${this.token}`,
-        'Content-Type': 'application/json',
-      }),
-    };
+	getHttpOptions() {
+		this.token = localStorage.getItem('token') ? localStorage.getItem('token') : null;
 
-    return httpOptions;
-  }
+		const httpOptions = {
+			headers: new HttpHeaders({
+				Authorization: `${this.token}`,
+				'Content-Type': 'application/json',
+			}),
+		};
+
+		return httpOptions;
+	}
 }

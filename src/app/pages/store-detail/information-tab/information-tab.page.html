@@ -1,0 +1,31 @@
+<app-header title="Información General"></app-header>
+
+<ion-content class="background-image">
+	<ion-refresher slot="fixed" (ionRefresh)="getStore(store.storeId, $event)">
+		<ion-refresher-content> </ion-refresher-content>
+	</ion-refresher>
+	<ion-card>
+		<ion-img [src]="store.image | image: 'store'"></ion-img>
+		<ion-card-header>
+			<ion-card-subtitle>
+				<ion-label>
+					<ion-icon slot="start" name="call"></ion-icon>
+					{{store.phone}}
+				</ion-label>
+			</ion-card-subtitle>
+			<ion-card-title>{{store.publicName}}</ion-card-title>
+		</ion-card-header>
+
+		<ion-card-content> {{store.description}} </ion-card-content>
+	</ion-card>
+
+	<ion-card>
+		<ion-grid style="height: 100%">
+			<ion-row style="height: 100%">
+				<ion-col size="12">
+					<div id="map"></div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-card>
+</ion-content>

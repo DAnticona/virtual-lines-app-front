@@ -1,0 +1,83 @@
+<app-header [title]="schedule.name"></app-header>
+
+<ion-content class="background-image">
+	<ion-refresher slot="fixed" (ionRefresh)="getSchedule(schedule.scheduleId, $event)">
+		<ion-refresher-content> </ion-refresher-content>
+	</ion-refresher>
+
+	<ion-card>
+		<ion-card-header>
+			<ion-card-title>{{schedule.name}}</ion-card-title>
+			<ion-card-subtitle>
+				{{schedule.date | date: 'dd-MM-yyyy'}} {{schedule.start | time: 'HH:mm'}} - {{schedule.end |
+				time:'HH:mm'}}
+			</ion-card-subtitle>
+			<ion-card-subtitle>Fecha: {{schedule.date | date: 'dd-MM-yyyy'}}</ion-card-subtitle>
+			<ion-card-subtitle *ngIf="schedule.multipleFg=='N'">Una reserva por cliente</ion-card-subtitle>
+			<ion-card-subtitle *ngIf="schedule.multipleFg=='S'">Múltiples reservas por cliente</ion-card-subtitle>
+			<ion-card-subtitle *ngIf="schedule.multipleFg=='S' && schedule.maxPerClientFg=='S'">
+				Reservas por cliente (máx): {{schedule.maxPerClient}}
+			</ion-card-subtitle>
+			<ion-card-subtitle *ngIf="schedule.multipleFg=='S' && schedule.maxPerClientFg=='N'">
+				Reservas por cliente (máx): Ilimitado
+			</ion-card-subtitle>
+			<ion-card-subtitle *ngIf="schedule.capacityFg=='N'"> Disponible: Ilimitado </ion-card-subtitle>
+			<ion-card-subtitle *ngIf="schedule.capacityFg=='S'">
+				Disponible: {{schedule.capacity - schedule.reservedNu}} reservas
+			</ion-card-subtitle>
+		</ion-card-header>
+		<ion-card-content>
+			<ion-list class="ion-no-padding" #lista>
+				<ion-item-sliding *ngFor="let booking of bookings">
+					<ion-item>
+						<ion-avatar slot="start">
+							<ion-img [src]="booking.user.image | image" alt=""></ion-img>
+						</ion-avatar>
+						<ion-label>
+							<h3>{{booking.user.name}}</h3>
+							<p>{{booking.user.email}}</p>
+						</ion-label>
+						<ion-badge color="primary" slot="end"> {{booking.quantity}} </ion-badge>
+					</ion-item>
+					<ion-item-options side="end">
+						<ion-item-option color="danger" (click)="attend(booking, false)">
+							<ion-icon slot="icon-only" name="trash"></ion-icon>
+						</ion-item-option>
+						<ion-item-option color="success" (click)="attend(booking, true)">
+							<ion-icon slot="icon-only" name="checkbox"></ion-icon>
+						</ion-item-option>
+					</ion-item-options>
+				</ion-item-sliding>
+			</ion-list>
+		</ion-card-content>
+	</ion-card>
+
+	<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+		<ion-fab-button color="tertiary" (click)="openAddClient()">
+			<ion-icon name="add"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
+
+	<div *ngIf="!bookings">
+		<ion-list>
+			<ion-list-header>
+				<ion-label>
+					<ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+				</ion-label>
+			</ion-list-header>
+			<ion-item *ngFor="let skeleton of skeletons">
+				<ion-avatar slot="start">
+					<ion-skeleton-text animated></ion-skeleton-text>
+				</ion-avatar>
+				<ion-label>
+					<h3>
+						<ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+					</h3>
+					<p>
+						<ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+					</p>
+				</ion-label>
+			</ion-item>
+		</ion-list>
+	</div>
+</ion-content>

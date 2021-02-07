@@ -1,30 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { UserService } from '../services/user/user.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+	selector: 'app-login',
+	templateUrl: './login.page.html',
+	styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
-  user: any = {};
-  loading = false;
+export class LoginPage {
+	user: any = {};
+	loading = false;
 
-  constructor(public userService: UserService, private router: Router) {}
+	constructor(public userService: UserService, public navController: NavController) {}
 
-  ngOnInit() {}
-
-  login() {
-    this.loading = true;
-    this.userService.login(this.user).subscribe(
-      (res: any) => {
-        this.loading = false;
-        this.router.navigate(['/pages/home']);
-      },
-      (err: any) => {
-        this.loading = false;
-      }
-    );
-  }
+	login() {
+		this.loading = true;
+		this.userService.login(this.user).subscribe(
+			res => {
+				if (res) {
+					this.navController.navigateRoot('/pages/home', { animated: true });
+				}
+				this.loading = false;
+			},
+			() => {
+				this.loading = false;
+			}
+		);
+	}
 }

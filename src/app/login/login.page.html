@@ -1,51 +1,52 @@
 <ion-content class="background-image">
-  <form ngNativeValidate #f="ngForm" (ngSubmit)="login(f)">
-    <ion-grid class="ion-padding">
-      <ion-row class="ion-justify-content-center">
-        <ion-col size-md="3" size-xs="6">
-          <ion-img src="assets/image/logo/logo.svg"></ion-img>
-        </ion-col>
-      </ion-row>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="9">
-          <ion-item [disabled]="loading">
-            <ion-input
-              type="email"
-              [(ngModel)]="user.email"
-              name="email"
-              placeholder="Email"
-              required
-            ></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="9">
-          <ion-item [disabled]="loading">
-            <ion-input
-              type="password"
-              [(ngModel)]="user.password"
-              name="password"
-              placeholder="Password"
-              required
-            ></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="9">
-          <ion-button [disabled]="loading" type="submit" expand="block" color="tertiary">
-            <ion-icon slot="start" *ngIf="!loading" name="enter-outline"></ion-icon>
-            <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
-            Login
-          </ion-button>
-        </ion-col>
-      </ion-row>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="9">
-          <small class="text-white">¿No tienes cuenta? <a routerLink="/register">Regístrate</a></small>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
+	<form ngNativeValidate #f="ngForm" (ngSubmit)="login()">
+		<ion-grid class="ion-padding">
+			<ion-row class="ion-justify-content-center">
+				<ion-col size-md="3" size-xs="6">
+					<ion-img src="assets/image/logo/logo.svg"></ion-img>
+				</ion-col>
+			</ion-row>
+			<ion-row class="ion-justify-content-center">
+				<ion-col size="9">
+					<ion-item [disabled]="loading">
+						<ion-input
+							type="email"
+							inputmode="email"
+							[(ngModel)]="user.email"
+							name="email"
+							placeholder="Email"
+							required
+						></ion-input>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+			<ion-row class="ion-justify-content-center">
+				<ion-col size="9">
+					<ion-item [disabled]="loading">
+						<ion-input
+							type="password"
+							[(ngModel)]="user.password"
+							name="password"
+							placeholder="Password"
+							required
+						></ion-input>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+			<ion-row class="ion-justify-content-center">
+				<ion-col size="9">
+					<ion-button [disabled]="loading" type="submit" expand="block" color="tertiary">
+						<ion-icon slot="start" *ngIf="!loading" name="enter-outline"></ion-icon>
+						<ion-spinner *ngIf="loading" name="dots"></ion-spinner>
+						Login
+					</ion-button>
+				</ion-col>
+			</ion-row>
+			<ion-row class="ion-justify-content-center">
+				<ion-col size="9">
+					<small class="text-white">¿No tienes cuenta? <a routerLink="/register">Regístrate</a></small>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</form>
 </ion-content>

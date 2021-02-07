@@ -1,27 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MENU_PATH } from '../../config/config';
 import { map } from 'rxjs/operators';
 import { UserService } from '../user/user.service';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class MenuService {
-  menuPath = MENU_PATH;
-  menus: any[] = [];
+	menuPath = environment.MENU_PATH;
 
-  constructor(private http: HttpClient, public userService: UserService) {}
+	constructor(private http: HttpClient, public userService: UserService) {}
 
-  getMenuOptions() {
-    return this.http.get<any[]>(this.menuPath).pipe(
-      map((res: any[]) => {
-        if (this.userService.user.storeFg === 'S') {
-          return res.filter(menu => menu.store);
-        } else {
-          return res.filter(menu => menu.client);
-        }
-      })
-    );
-  }
+	getMenuOptions() {
+		return this.http.get<any[]>(this.menuPath).pipe(
+			map((res: any[]) => {
+				const menus: any[] = [];
+				res.forEach(menu => {
+					menu.roles.forEach(role => {
+						if (role.roleId === this.userService.user.role.roleId) {
+							menus.push(menu);
+						}
+					});
+				});
+				return menus;
+			})
+		);
+	}
 }

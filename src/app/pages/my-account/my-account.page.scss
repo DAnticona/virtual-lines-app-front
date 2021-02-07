@@ -1,0 +1,27 @@
+.global-container {
+	padding: 20px 0px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.container {
+	position: relative;
+	width: 200px;
+}
+
+.avatar {
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	background-repeat: no-repeat;
+	background-position: 50%;
+	border-radius: 50%;
+	background-size: 100% auto;
+}
+
+.image-button {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+}

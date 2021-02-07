@@ -54,7 +54,6 @@ export class LocationPage implements OnInit {
     this.addMarker(initialLocation);
 
     google.maps.event.addListener(this.map, 'click', (event: any) => {
-      console.log(this.map);
       this.latitude = event.latLng.toJSON().lat;
       this.longitude = event.latLng.toJSON().lng;
 

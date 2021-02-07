@@ -1,74 +1,74 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar class="background-header">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/login"></ion-back-button>
-    </ion-buttons>
-    <ion-title class="text-white">Nuevo Usuario</ion-title>
-  </ion-toolbar>
+	<ion-toolbar class="background-header">
+		<ion-buttons slot="start">
+			<ion-back-button color="light" defaultHref="/login"></ion-back-button>
+		</ion-buttons>
+		<ion-title class="text-white">Nuevo Usuario</ion-title>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding background-image">
-  <form [formGroup]="form" (ngSubmit)="save()">
-    <ion-grid>
-      <ion-row class="ion-justify-content-evenly">
-        <ion-col size="12">
-          <ion-list class="ion-padding">
-            <ion-item [disabled]="loading">
-              <ion-label position="floating">Nombre</ion-label>
-              <ion-input type="text" name="name" formControlName="name"></ion-input>
-            </ion-item>
-            <ion-list *ngIf="name.invalid && name.touched" lines="none">
-              <ion-item>
-                <ion-text color="danger">
-                  <small>Ingrese un nombre</small>
-                </ion-text>
-              </ion-item>
-            </ion-list>
-            <ion-item [disabled]="loading">
-              <ion-label position="floating">Email</ion-label>
-              <ion-input type="email" name="email" formControlName="email"></ion-input>
-            </ion-item>
-            <ion-list *ngIf="email.invalid && email.touched" lines="none">
-              <ion-item>
-                <ion-text color="danger">
-                  <small>ingrese un email válido</small>
-                </ion-text>
-              </ion-item>
-            </ion-list>
-            <ion-item [disabled]="loading">
-              <ion-label position="floating">Contraseña</ion-label>
-              <ion-input type="password" name="password1" formControlName="password1"></ion-input>
-            </ion-item>
-            <ion-list *ngIf="password1.invalid && password1.touched" lines="none">
-              <ion-item>
-                <ion-text color="danger">
-                  <small>Ingrese una contraseña</small>
-                </ion-text>
-              </ion-item>
-            </ion-list>
-            <ion-item [disabled]="loading">
-              <ion-label position="floating">Repetir Contraseña</ion-label>
-              <ion-input type="password" name="password2" formControlName="password2"></ion-input>
-            </ion-item>
-            <ion-list *ngIf="password2.invalid && password2.touched" lines="none">
-              <ion-item>
-                <ion-text color="danger">
-                  <small>Las contraseñas no coinciden</small>
-                </ion-text>
-              </ion-item>
-            </ion-list>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-      <ion-row class="ion-padding ion-justify-content-center">
-        <ion-col size-sm="12" size-md="9">
-          <ion-button color="tertiary" [disabled]="loading" type="submit" expand="block">
-            <ion-icon class="ion-padding" *ngIf="!loading" name="save-outline"></ion-icon>
-            <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
-            Registrarse
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
+	<form [formGroup]="form" (ngSubmit)="save()">
+		<ion-grid>
+			<ion-row class="ion-justify-content-evenly">
+				<ion-col size="12">
+					<ion-list class="ion-padding">
+						<ion-item [disabled]="loading">
+							<ion-label position="floating">Nombre</ion-label>
+							<ion-input type="text" inputmode="text" name="name" formControlName="name"></ion-input>
+						</ion-item>
+						<ion-list *ngIf="name.invalid && name.touched" lines="none">
+							<ion-item>
+								<ion-text color="danger">
+									<small>Ingrese un nombre</small>
+								</ion-text>
+							</ion-item>
+						</ion-list>
+						<ion-item [disabled]="loading">
+							<ion-label position="floating">Email</ion-label>
+							<ion-input type="email" inputmode="email" name="email" formControlName="email"></ion-input>
+						</ion-item>
+						<ion-list *ngIf="email.invalid && email.touched" lines="none">
+							<ion-item>
+								<ion-text color="danger">
+									<small>ingrese un email válido</small>
+								</ion-text>
+							</ion-item>
+						</ion-list>
+						<ion-item [disabled]="loading">
+							<ion-label position="floating">Contraseña</ion-label>
+							<ion-input type="password" name="password1" formControlName="password1"></ion-input>
+						</ion-item>
+						<ion-list *ngIf="password1.invalid && password1.touched" lines="none">
+							<ion-item>
+								<ion-text color="danger">
+									<small>Ingrese una contraseña</small>
+								</ion-text>
+							</ion-item>
+						</ion-list>
+						<ion-item [disabled]="loading">
+							<ion-label position="floating">Repetir Contraseña</ion-label>
+							<ion-input type="password" name="password2" formControlName="password2"></ion-input>
+						</ion-item>
+						<ion-list *ngIf="password2.invalid && password2.touched" lines="none">
+							<ion-item>
+								<ion-text color="danger">
+									<small>Las contraseñas no coinciden</small>
+								</ion-text>
+							</ion-item>
+						</ion-list>
+					</ion-list>
+				</ion-col>
+			</ion-row>
+			<ion-row class="ion-padding ion-justify-content-center">
+				<ion-col size-sm="12" size-md="9">
+					<ion-button color="tertiary" [disabled]="loading" type="submit" expand="block">
+						<ion-icon class="ion-padding" *ngIf="!loading" name="save-outline"></ion-icon>
+						<ion-spinner *ngIf="loading" name="dots"></ion-spinner>
+						Registrarse
+					</ion-button>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</form>
 </ion-content>

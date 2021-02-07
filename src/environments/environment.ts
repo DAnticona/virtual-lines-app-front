@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+	production: false,
+	url: 'http://34.197.155.133:9191/app',
+	// url: 'http://192.168.1.11:9191/app',
+	MENU_PATH: 'assets/data/menu.json',
 };
 
 /*

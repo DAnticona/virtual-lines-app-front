@@ -1,69 +1,67 @@
 <app-header title="Mi Cuenta"></app-header>
 <ion-content class="background-image">
-  <ion-refresher slot="fixed" (ionRefresh)="getUser(user.email, $event)">
-    <ion-refresher-content
-      pullingIcon="chevron-down-circle"
-      pullingText="Actualizar"
-      color="danger"
-      refreshingSpinner="lines"
-      refreshingText="Actualizando..."
-    >
-    </ion-refresher-content>
-  </ion-refresher>
-  <ion-grid style="height: 100%">
-    <ion-row style="height: 80%">
-      <ion-col size="12">
-        <ion-list class="ion-padding">
-          <ion-item lines="none">
-            <div class="ion-padding">
-              <img class="img-100 img-circle" [src]="userService.user.image | image" />
-            </div>
-            <div class="ion-padding">
-              <ion-button expand="block" shape="round"> Cambiar imagen </ion-button>
-            </div>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Nombre:</ion-label>
-            <ion-input
-              type="text"
-              name="name"
-              placeholder="Nombre del usuario"
-              [(ngModel)]="user.name"
-              required
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">E-mail:</ion-label>
-            <ion-input type="text" name="name" [value]="user.email" disabled></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Rol:</ion-label>
-            <ion-input type="text" name="name" [value]="user.role.name" disabled></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-align-items-end" style="height: 20%">
-      <ion-col size="12">
-        <ion-button [disabled]="loading" color="tertiary" type="button" expand="block" (click)="save()">
-          <ion-icon class="ion-padding" *ngIf="!loading" name="save-outline"></ion-icon>
-          <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
-          Guardar datos
-        </ion-button>
-      </ion-col>
-      <ion-col size="12">
-        <ion-button
-          [disabled]="loading"
-          color="secondary"
-          type="button"
-          expand="block"
-          (click)="openChangePassword()"
-        >
-          <ion-icon class="ion-padding" *ngIf="!loading" name="key-outline"></ion-icon>
-          <ion-spinner *ngIf="loading" name="dots"></ion-spinner>
-          Cambiar contraseña
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+	<ion-refresher slot="fixed" (ionRefresh)="getUser(user.email, $event)">
+		<ion-refresher-content> </ion-refresher-content>
+	</ion-refresher>
+	<ion-card>
+		<div class="global-container">
+			<div class="container">
+				<img
+					*ngIf="!userService.user.image"
+					class="img-100 img-circle avatar"
+					[src]="userService.user.image | image"
+				/>
+				<div *ngIf="userService.user.image" class="avatar" [ngStyle]="{'background-image': imageUser}"></div>
+				<ion-button
+					type="button"
+					class="image-button"
+					(click)="presentActionSheet()"
+					size="small"
+					shape="round"
+					color="light"
+				>
+					<ion-icon slot="icon-only" name="camera" color="dark"></ion-icon>
+				</ion-button>
+			</div>
+		</div>
+		<ion-list>
+			<ion-item>
+				<ion-label position="stacked">Nombre:</ion-label>
+				<ion-input
+					type="text"
+					inputmode="text"
+					name="name"
+					placeholder="Nombre del usuario"
+					[(ngModel)]="user.name"
+					required
+				></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label position="stacked">E-mail:</ion-label>
+				<ion-input type="text" inputmode="email" name="name" [value]="user.email" disabled></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label position="stacked">Rol:</ion-label>
+				<ion-input type="text" name="name" [value]="user.role.name" disabled></ion-input>
+			</ion-item>
+		</ion-list>
+		<ion-card-content>
+			<ion-button [disabled]="loading" color="tertiary" type="button" expand="block" (click)="save()">
+				<ion-icon slot="start" *ngIf="!loading" name="save-outline"></ion-icon>
+				<ion-spinner slot="start" *ngIf="loading" name="dots"></ion-spinner>
+				Guardar datos
+			</ion-button>
+			<ion-button
+				[disabled]="loading"
+				color="secondary"
+				type="button"
+				expand="block"
+				(click)="openChangePassword()"
+			>
+				<ion-icon slot="start" *ngIf="!loading" name="key-outline"></ion-icon>
+				<ion-spinner slot="start" *ngIf="loading" name="dots"></ion-spinner>
+				Cambiar contraseña
+			</ion-button>
+		</ion-card-content>
+	</ion-card>
 </ion-content>

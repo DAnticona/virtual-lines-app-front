@@ -1,0 +1,76 @@
+<app-header title="Reservas"></app-header>
+
+<ion-content class="background-image">
+	<ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+		<ion-refresher-content> </ion-refresher-content>
+	</ion-refresher>
+
+	<ion-card>
+		<ion-item>
+			<ion-label>Seleccionar fecha</ion-label>
+			<ion-datetime
+				#date
+				displayFormat="DD/MM/YYYY"
+				[min]="today | date: 'yyyy-MM-dd'"
+				max="2100-12-31"
+				[value]="today | date: 'yyyy-MM-dd HH:mm'"
+				placeholder="Seleccione"
+				(ionChange)="onChangeDate()"
+			></ion-datetime>
+		</ion-item>
+	</ion-card>
+
+	<ion-card *ngIf="schedules">
+		<ion-card-header>
+			<ion-card-title>Citas disponibles</ion-card-title>
+			<ion-card-subtitle>Hay {{schedulesNumber}} citas disponibles para esta fecha</ion-card-subtitle>
+		</ion-card-header>
+		<ion-item (click)="inOut(schedule)" *ngFor="let schedule of schedules">
+			<ion-icon slot="start" name="calendar"></ion-icon>
+			<ion-label [color]="schedule.isExists ? 'danger' : 'success'">
+				<h2>{{schedule.name}}</h2>
+				<p>Fecha: {{schedule.date | date: 'dd-MM-yyyy'}}</p>
+				<p>Hora:{{schedule.start | time: 'HH:mm'}} - {{schedule.end | time: 'HH:mm'}}</p>
+				<p *ngIf="schedule.multipleFg=='N'">Una reserva por cliente</p>
+				<p *ngIf="schedule.multipleFg=='S'">Múltiples reservas por cliente</p>
+				<p *ngIf="schedule.multipleFg=='S' && schedule.maxPerClientFg=='S'">
+					Reserva por cliente (máx): {{schedule.maxPerClient}}
+				</p>
+				<p *ngIf="schedule.multipleFg=='S' && schedule.maxPerClientFg=='N'">
+					Reserva por cliente (máx): Ilimitado
+				</p>
+				<p *ngIf="schedule.capacityFg == 'S'">Disponible {{schedule.capacity - schedule.reservedNu}}</p>
+				<p *ngIf="schedule.capacityFg == 'S'">Capacidad {{schedule.capacity}}</p>
+				<p *ngIf="schedule.capacityFg == 'N'">Sin límite de capacidad</p>
+			</ion-label>
+			<ion-icon
+				slot="end"
+				[color]="schedule.isExists ? 'danger' : 'success'"
+				[name]="schedule.isExists ? 'remove-circle' : 'add-circle'"
+			></ion-icon>
+		</ion-item>
+	</ion-card>
+
+	<div *ngIf="!schedules">
+		<ion-list>
+			<ion-list-header>
+				<ion-label>
+					<ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+				</ion-label>
+			</ion-list-header>
+			<ion-item *ngFor="let skeleton of skeletons">
+				<ion-avatar slot="start">
+					<ion-skeleton-text animated></ion-skeleton-text>
+				</ion-avatar>
+				<ion-label>
+					<h3>
+						<ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+					</h3>
+					<p>
+						<ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+					</p>
+				</ion-label>
+			</ion-item>
+		</ion-list>
+	</div>
+</ion-content>

@@ -1,28 +1,32 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar class="background-header">
-    <ion-buttons slot="start">
-      <ion-menu-button color="light" menu="firstMenu"> </ion-menu-button>
-    </ion-buttons>
-    <ion-title class="ion-text-center text-white">Inicio</ion-title>
-    <ion-buttons slot="end">
-      <ion-avatar>
-        <img [src]="userService.user.image | image" alt="" />
-      </ion-avatar>
-    </ion-buttons>
-  </ion-toolbar>
+	<ion-toolbar class="background-header">
+		<ion-buttons slot="start">
+			<ion-menu-button color="light" menu="firstMenu"> </ion-menu-button>
+		</ion-buttons>
+		<ion-title class="ion-text-center text-white">Inicio</ion-title>
+		<ion-buttons slot="end">
+			<ion-avatar>
+				<img [src]="userService.user.image | image" alt="" />
+			</ion-avatar>
+		</ion-buttons>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content class="background-image">
-  <ion-card>
-    <ion-img src="assets/image/logo/background_login.jpg"></ion-img>
-    <ion-card-header>
-      <ion-card-subtitle>Hola</ion-card-subtitle>
-      <ion-card-title>{{userService.user.name}}</ion-card-title>
-    </ion-card-header>
+	<ion-card>
+		<ion-img src="assets/image/logo/background_login.jpg"></ion-img>
+		<ion-card-header>
+			<ion-card-subtitle>Hola</ion-card-subtitle>
+			<ion-card-title>{{userService.user.name}}</ion-card-title>
+		</ion-card-header>
 
-    <ion-card-content>
-      Ya no tienes que esperar de forma presencial en una fila, únete a una fila virtual y utiliza el tiempo
-      de espera en lo que más te guste...
-    </ion-card-content>
-  </ion-card>
+		<ion-card-content *ngIf="userService.user.storeFg=='N'">
+			Ya no tienes que esperar de forma presencial en una fila, únete a una fila virtual y utiliza el tiempo
+			de espera en lo que más te guste...
+		</ion-card-content>
+		<ion-card-content *ngIf="userService.user.storeFg=='S'">
+			Ahora los clientes de {{userService.user.store.publicName}} podrán ahorrar tiempo y acceder a más
+			beneficios.
+		</ion-card-content>
+	</ion-card>
 </ion-content>
