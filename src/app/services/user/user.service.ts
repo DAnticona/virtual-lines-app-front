@@ -8,6 +8,7 @@ import { HttpService } from '../http/http.service';
 import { environment } from '../../../environments/environment';
 import { RoleEnum } from '../../enums/role.enum';
 import { NavController } from '@ionic/angular';
+import { PushService } from '../notifications/push.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -22,7 +23,8 @@ export class UserService {
 		private alertService: AlertService,
 		private http: HttpClient,
 		private navController: NavController,
-		private fileTransfer: FileTransfer
+		private fileTransfer: FileTransfer,
+		private pushService: PushService
 	) {
 		this.loadStorage();
 	}
@@ -45,6 +47,7 @@ export class UserService {
 	}
 
 	login(user: any) {
+		user.subscriptorId = this.pushService.subscriptorId;
 		const url = `${this.baseUrl}/login`;
 
 		return this.http.post(url, user).pipe(

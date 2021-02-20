@@ -22,7 +22,7 @@ export class BookingsTabPage {
 	schedules: any[];
 	schedulesNumber: number;
 
-	today = new Date().getTime();
+	today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
 
 	@ViewChild('date') dateSchedule: IonDatetime;
 
@@ -103,7 +103,7 @@ export class BookingsTabPage {
 				{
 					name: 'count',
 					type: 'number',
-					placeholder: 'Nro. de personas',
+					placeholder: 'Nro. de reservas',
 				},
 			],
 			buttons: [

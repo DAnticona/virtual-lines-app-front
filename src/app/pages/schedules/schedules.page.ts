@@ -22,7 +22,7 @@ export class SchedulesPage {
 	count: number;
 
 	filter = false;
-	today = new Date().getTime();
+	today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime();
 
 	@ViewChild('lista') lista: IonList;
 	@ViewChild('date') dateSchedule: IonDatetime;

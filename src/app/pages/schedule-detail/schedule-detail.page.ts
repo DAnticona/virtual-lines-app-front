@@ -35,7 +35,6 @@ export class ScheduleDetailPage {
 	}
 
 	openAddClient() {
-		console.log(this.schedule);
 		const header = `Agregar cliente`;
 		if (this.schedule.multipleFg === 'N') {
 			this.presentAlertInSimple(header);
@@ -87,7 +86,7 @@ export class ScheduleDetailPage {
 				{
 					name: 'count',
 					type: 'number',
-					placeholder: 'Nro. de personas',
+					placeholder: 'Nro. de reservas',
 				},
 			],
 			buttons: [
@@ -100,7 +99,6 @@ export class ScheduleDetailPage {
 					text: 'Reservar',
 					handler: data => {
 						const quantity = Number(data.count);
-						console.log(data);
 						this.addClient(data.email, quantity);
 					},
 				},
